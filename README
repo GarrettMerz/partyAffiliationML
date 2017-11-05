@@ -1,2 +1,31 @@
-directions for text scraping to come as soon as I formalize
-the process a bit more.
+------------------------------------------------------------------
+SCRAPING TEXT
+
+We use data stored at http://www.presidency.ucsb.edu/index.php
+
+scrape.py will download all the files listed on a webpage with
+a form like:
+
+http://www.presidency.ucsb.edu/2016_election_speeches.php?candidate=70&campaign=2016CLINTON&doctype=5000
+
+the shell script runScraper.sh contains examples for executing the
+python scrip. 
+
+scrape.py will save one file per speech with the following path:
+
+data/rawtext/[electionyear]/[D/R]/[speakerinitial]_[filenum]
+
+a list of all the files in a particular directory is save in files.list
+
+
+------------------------------------------------------------------
+PROCESSING TEXT
+
+for now, so experimentation with processing text is saved in
+python_files/featExt.py
+
+
+We will develop a vocabulary of 5000(?) of the most common
+words in our corpus (after removing stopwords, lemmatizing,
+and stemming) and transform each set of text to a bag of words
+format.
