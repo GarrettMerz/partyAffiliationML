@@ -1,0 +1,1 @@
+echo python scrape.py 'http://www.presidency.ucsb.edu/2016_election_speeches.php?candidate=70&campaign=2016CLINTON&doctype=5000' 2016 'D' 'HC'
