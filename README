@@ -17,6 +17,11 @@ data/rawtext/[electionyear]/[D/R]/[speakerinitial]_[filenum]
 
 a list of all the files in a particular directory is save in files.list
 
+NOTES:
+
+HC_0 - HC_106 were removed because they were dated in 2007 and 2008
+long before the 2016 campaign.
+
 
 ------------------------------------------------------------------
 PROCESSING TEXT
