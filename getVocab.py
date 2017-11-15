@@ -21,6 +21,7 @@ s = s1 | s2 | s3
 s = {x.lower() for x in s}
 
 s.add('{')
+s.add('}')
 s.add('!')
 s.add('$')
 s.add("'")
@@ -37,6 +38,7 @@ s.add(')')
 s.add(',')
 s.add('.')
 s.add('/')
+s.add('\\')
 s.add(':')
 s.add('?')
 s.add(';')
@@ -45,7 +47,9 @@ s.add(']')
 s.add('%')
 s.add('&')
 s.add('``')
+s.add('`')
 s.add('#')
+s.add('`we')
 
 corpus = []
 party = []
@@ -66,6 +70,7 @@ for thisfile in allfiles:
         txt = re.sub("-", " ", txt)
         txt = re.sub("'", " ", txt)
         txt = re.sub("\.", " ", txt)
+        txt = re.sub("/", " ", txt)
         corpus.append(txt)
 
 # print party
