@@ -13,6 +13,7 @@ class LemmaTokenizer(object):
         temp = [self.wnl.lemmatize(t) for t in word_tokenize(doc)]
         return [self.ps.stem(t) for t in temp]
 
+# s = set(stopwords.words('english'))
 s1 = set(stopwords.words('english'))
 s2 = set(names.words('male.txt'))
 s3 = set(names.words('female.txt'))
@@ -81,7 +82,7 @@ Y = X.toarray()
 outfile = open("outfile.dat", "w")
 
 for i in range(0, len(Y)):
-    thisline = '' + str(party[i]) + ' '
+    thisline = '' + str(party[i]) + '  '
     for j in range(0, len(Y[i])):
         if Y[i][j] != 0:
             thisline += str(j+1) + ':' + str(Y[i][j]) + ' '
