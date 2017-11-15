@@ -17,7 +17,7 @@
 import numpy as np
 from operator import itemgetter
 
-ntokens = 12650
+ntokens = 5881
 
 print "Estimating probabilities with train_data.dat"
 with open('train_data.dat') as f:
