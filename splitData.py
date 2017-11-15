@@ -9,7 +9,7 @@ test_data = open("test_data.dat", "w")
 i = 0
 for thisline in content:
    i += 1
-   if (i%5 == 0):
+   if (i%3 == 0):
       test_data.write(thisline)
    else:
       train_data.write(thisline)

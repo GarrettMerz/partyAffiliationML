@@ -20,7 +20,7 @@ from operator import itemgetter
 ntokens = 6000
 
 print "Estimating probabilities with train_data.dat"
-with open('train_data.dat') as f:
+with open('ObamaTrumpVocab/train_data.dat') as f:
     content = f.readlines()
 
 data = []
@@ -83,7 +83,7 @@ indicator = sorted(indicator, key=itemgetter(1))
 print indicator[:5]
 
 print "Testing with test_data.dat"
-with open('test_data.dat') as f:
+with open('ObamaTrumpVocab/test_data.dat') as f:
     content = f.readlines()
 
 testdata = []
