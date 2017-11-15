@@ -50,7 +50,7 @@ s.add('#')
 corpus = []
 party = []
 
-with io.open('filesBODT.list', 'r') as filelist:
+with io.open('allfiles.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
