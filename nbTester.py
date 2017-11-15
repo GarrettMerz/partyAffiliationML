@@ -42,7 +42,7 @@ for i in range(0, len(data)):
       ny1 += 1
    cmat[i][0] = data[i][0]
    for feat, fval in data[i][1]:
-      cmat[i][int(feat)] = int(fval)
+      cmat[i][int(feat)] = float(fval)
 
 py1 = float(ny1)/len(data) # p(y=1)
 
@@ -104,7 +104,7 @@ for i in range(0, len(testdata)):
       ny1 += 1
    testcmat[i][0] = testdata[i][0]
    for feat, fval in testdata[i][1]:
-      testcmat[i][int(feat)] = int(fval)
+      testcmat[i][int(feat)] = float(fval)
 
 #calculate p(di|y=1) and p(di|y=-1)
 # from here on out I'm working with logs

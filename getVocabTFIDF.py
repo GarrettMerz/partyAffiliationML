@@ -4,6 +4,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 import io, unicodedata, re
+import numpy as np
 
 class LemmaTokenizer(object):
     def __init__(self):
@@ -69,14 +70,25 @@ for thisfile in allfiles:
 
 # print party
 
-vectorizer = CountVectorizer(stop_words=s, tokenizer=LemmaTokenizer(), max_features=None)
+vectorizer = CountVectorizer(stop_words=s, tokenizer=LemmaTokenizer(), max_features=5000)
 X = vectorizer.fit_transform(corpus)
 all_tokens = vectorizer.get_feature_names()
 
-print all_tokens
-print X.toarray()
+# print all_tokens
+# print X.toarray()
 
 Y = X.toarray()
+
+N = len(Y)
+nt = np.zeros(len(Y[0]))
+
+for i in range(0, len(Y)):
+    for j in range(0, len(Y[i])):
+        if Y[i][j] != 0:
+            nt[j] += 1
+
+print N
+print nt
 
 outfile = open("outfile.dat", "w")
 
@@ -84,7 +96,8 @@ for i in range(0, len(Y)):
     thisline = '' + str(party[i]) + ' '
     for j in range(0, len(Y[i])):
         if Y[i][j] != 0:
-            thisline += str(j+1) + ':' + str(Y[i][j]) + ' '
+            thisweight = Y[i][j] * np.log(1 + float(N)/nt[j])
+            thisline += str(j+1) + ':' + str(thisweight) + ' '
     thisline += '\n'
     outfile.write(thisline)
 
