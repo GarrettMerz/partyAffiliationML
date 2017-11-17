@@ -9,7 +9,7 @@ tokens_size = 12650
 linenum = 0
 probwordgivspam, probwordgivgood, spamsum, goodsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('partyAffiliationML/forGarrett/train_data.dat') as f:
+with open('../data/processed_wf/2008_2016/train_data.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -33,10 +33,10 @@ for i in range(0, tokens_size):
  probwordgivgood[i] = (1 + goodsum[i])/(len(goodsum)+sum(goodsum))
  logprobs[i] = np.log(probwordgivspam[i]/probwordgivgood[i])
 
-with open('partyAffiliationML/forGarrett/test_data.dat') as g:
  numdocs = 0
  misclass = 0
 #get labels
+with open('../data/processed_wf/2008_2016/test_data.dat') as g:
  for i, line in enumerate(g):
   linenum += 1
   numdocs += 1
