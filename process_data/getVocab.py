@@ -54,7 +54,7 @@ s.add('`we')
 corpus = []
 party = []
 
-with io.open('allfiles.list', 'r') as filelist:
+with io.open('filelists/files_2016.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
@@ -84,7 +84,7 @@ print X.toarray()
 
 Y = X.toarray()
 
-outfile = open("outfile.dat", "w")
+outfile = open("SPARSE.dat", "w")
 
 for i in range(0, len(Y)):
     thisline = '' + str(party[i]) + '  '

@@ -21,6 +21,7 @@ s = s1 | s2 | s3
 s = {x.lower() for x in s}
 
 s.add('{')
+s.add('}')
 s.add('!')
 s.add('$')
 s.add("'")
@@ -37,6 +38,7 @@ s.add(')')
 s.add(',')
 s.add('.')
 s.add('/')
+s.add('\\')
 s.add(':')
 s.add('?')
 s.add(';')
@@ -45,7 +47,9 @@ s.add(']')
 s.add('%')
 s.add('&')
 s.add('``')
+s.add('`')
 s.add('#')
+s.add('`we')
 
 corpus = []
 party = []
@@ -108,6 +112,3 @@ token_list = open("TOKEN_LIST", "w")
 for i in range(0, len(all_tokens)):
     thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
     token_list.write(thisline)
-
-# print all_tokens
-# print len(all_tokens)
