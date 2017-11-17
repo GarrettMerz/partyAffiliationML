@@ -1,3 +1,46 @@
+GIT HELP
+------------------------------------------------------------------
+When starting a new work session do 
+
+>>cd partyAffiliationML
+>>git pull
+
+If everything goes well, great! There are two types of errors you
+might run into:
+
+1) merge conflicts. i.e. someone else changed a file and pushed it
+and you've also changed the file and git can't figure out what
+exactly it should keep -- open the file and look for lines
+bracketed by <<<<< and >>>>> to solve merge conflicts, then add,
+commit, and push changes (see below)
+
+2) you have existing changes and git wants you to commit those
+before you pull. You have two options: commit changes if you
+want to keep them, or use git stash to discard all changes to
+your local files
+
+Now, assuming everything was pulled successfully, you can go ahead
+and make changes! On a regular basis you should commit these changes
+
+To check on the status of your local branch use
+
+>>git status
+
+To begin the process of commiting changes, use
+
+>>git add -A
+>>git commit -m "message about commit"
+
+You can commit as many times as you want, the more the better.
+When you want to push those changes so the rest of the group
+can access them, use
+
+>> git push
+
+Most problems can be solved with a simple google search. If not,
+contact Rory.
+
+
 ------------------------------------------------------------------
 SCRAPING TEXT
 
