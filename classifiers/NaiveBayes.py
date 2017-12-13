@@ -2,11 +2,17 @@ import numpy as np
 import heapq
 from sklearn.model_selection import train_test_split
 
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+
 numspam = 0
 numgood = 0
 guessgoodfiles = 0
 guessbadfiles = 0
-tokens_size = 12650
+tokens_size = file_len('../data/processed_wf/2016/TOKEN_LIST')
 linenum = 0
 probwordgivspam, probwordgivgood, spamsum, goodsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
@@ -36,8 +42,17 @@ for i in range(0, tokens_size):
 
  numdocs = 0
  misclass = 0
+
+print("Democratic-est words are at")
+Democraticest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
+print(Democraticest + np.ones(len(Democraticest)))
+
+print("Republican-est words are at")
+Republicanest = heapq.nsmallest(5, range(len(logprobs)), logprobs.__getitem__)
+print(Republicanest + np.ones(len(Republicanest)))
+
 #get labels
-with open('data/processed_wf/2016/test_data.dat') as g:
+with open('../data/processed_wf/2016/test_data.dat') as g:
  for i, line in enumerate(g):
   linenum += 1
   numdocs += 1
@@ -72,10 +87,3 @@ print(guessbadfiles)
 print("democrat speeches number guess is")
 print(guessgoodfiles)
 
-print("Democratic-est words are at")
-Democraticest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
-print(Democraticest + np.ones(len(Democraticest)))
-
-print("Republican-est words are at")
-Republicanest = heapq.nsmallest(5, range(len(logprobs)), logprobs.__getitem__)
-print(Republicanest + np.ones(len(Republicanest)))
