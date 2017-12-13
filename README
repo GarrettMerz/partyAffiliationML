@@ -88,6 +88,11 @@ randomization involved in this process
 ------------------------------------------------------------------
 ANALYZING TEXT
 
-Right now, we have one analyzer: NaiveBayes.py (thanks Garrett!).
-When run on the full corpus from the last three election cycles it
-has a classification error of ~10%
+NaiveBayes.py:
+
+	Naive Bayes, no crossvalidation.
+
+basicSVM.py:
+
+	Simple implementation of scikit.svm.LinearSVC that uses 5-fold
+	cross validation on dataset.
