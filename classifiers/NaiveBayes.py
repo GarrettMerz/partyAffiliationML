@@ -1,5 +1,6 @@
 import numpy as np
 import heapq
+from sklearn.model_selection import train_test_split
 
 numspam = 0
 numgood = 0
@@ -36,7 +37,7 @@ for i in range(0, tokens_size):
  numdocs = 0
  misclass = 0
 #get labels
-with open('../data/processed_wf/2016/test_data.dat') as g:
+with open('data/processed_wf/2016/test_data.dat') as g:
  for i, line in enumerate(g):
   linenum += 1
   numdocs += 1

@@ -100,6 +100,21 @@ for i in range(0, len(Y)):
 
 outfile.close()
 
+outfile2x = open("DENSE.X.dat", "w")
+outfile2y = open("DENSE.Y.dat", "w")
+
+for i in range(0, len(Y)):
+    thislineY = '' + str(party[i]) + '\n'
+    thislineX = ''
+    for j in range(0, len(Y[i])):
+        thislineX += str(Y[i][j]) + ','
+    thislineX += '\n'
+    outfile2x.write(thislineX)
+    outfile2y.write(thislineY)
+
+outfile2x.close()
+outfile2y.close()
+
 token_list = open("TOKEN_LIST", "w")
 
 for i in range(0, len(all_tokens)):

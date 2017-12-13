@@ -108,6 +108,19 @@ for i in range(0, len(Y)):
 
 outfile.close()
 
+outfile2 = open("DENSE.dat", "w")
+
+# for i in range(0, len(Y)):
+#     thisline = '' + str(party[i]) + ','
+#     for j in range(0, len(Y[i])):
+#         if Y[i][j] != 0:
+#             thisweight = Y[i][j] * np.log(1 + float(N)/nt[j])
+#             thisline += str(j+1) + ':' + str(thisweight) + ' '
+#     thisline += '\n'
+#     outfile2.write(thisline)
+
+# outfile2.close()
+
 token_list = open("TOKEN_LIST", "w")
 
 for i in range(0, len(all_tokens)):
