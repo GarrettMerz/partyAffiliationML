@@ -1,7 +1,6 @@
 import numpy as np
 from operator import itemgetter
 from sklearn.svm import LinearSVC
-from sklearn.svm import SVC
 from sklearn.model_selection import cross_val_score
 import csv
 
