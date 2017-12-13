@@ -21,6 +21,7 @@ s = s1 | s2 | s3
 s = {x.lower() for x in s}
 
 s.add('{')
+s.add('}')
 s.add('!')
 s.add('$')
 s.add("'")
@@ -37,6 +38,7 @@ s.add(')')
 s.add(',')
 s.add('.')
 s.add('/')
+s.add('\\')
 s.add(':')
 s.add('?')
 s.add(';')
@@ -45,12 +47,17 @@ s.add(']')
 s.add('%')
 s.add('&')
 s.add('``')
+s.add('`')
 s.add('#')
+s.add('`we')
+s.add('_')
+s.add('uh')
+s.add('q')
 
 corpus = []
 party = []
 
-with io.open('allfiles2008.list', 'r') as filelist:
+with io.open('filelists/files_2016.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
@@ -66,6 +73,7 @@ for thisfile in allfiles:
         txt = re.sub("-", " ", txt)
         txt = re.sub("'", " ", txt)
         txt = re.sub("\.", " ", txt)
+        txt = re.sub("\*", " ", txt)
         corpus.append(txt)
 
 # print party
@@ -74,8 +82,8 @@ vectorizer = CountVectorizer(stop_words=s, tokenizer=LemmaTokenizer(), max_featu
 X = vectorizer.fit_transform(corpus)
 all_tokens = vectorizer.get_feature_names()
 
-# print all_tokens
-# print X.toarray()
+print all_tokens
+print X.toarray()
 
 Y = X.toarray()
 
@@ -87,10 +95,7 @@ for i in range(0, len(Y)):
         if Y[i][j] != 0:
             nt[j] += 1
 
-print N
-print nt
-
-outfile = open("outfile.dat", "w")
+outfile = open("SPARSE.dat", "w")
 
 for i in range(0, len(Y)):
     thisline = '' + str(party[i]) + '  '
@@ -108,6 +113,3 @@ token_list = open("TOKEN_LIST", "w")
 for i in range(0, len(all_tokens)):
     thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
     token_list.write(thisline)
-
-# print all_tokens
-# print len(all_tokens)
