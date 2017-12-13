@@ -11,13 +11,13 @@ def file_len(fname):
 train_year = '1960'
 test_year = '1960'
 
-tokens_size = file_len('../data/processed_wf/'+train_year+'/TOKEN_LIST')
-train_images = np.zeros((file_len('../data/processed_wf/'+train_year+'/train_data.dat'), tokens_size))
-test_images = np.zeros((file_len('../data/processed_wf/'+test_year+'/test_data.dat'), tokens_size))
-train_labels = np.zeros(file_len('../data/processed_wf/'+train_year+'/train_data.dat'))
-test_labels = np.zeros(file_len('../data/processed_wf/'+test_year+'/test_data.dat'))
+tokens_size = file_len('../data/processed_wf/ALLYEARS/TOKEN_LIST')
+train_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'), tokens_size))
+test_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'), tokens_size))
+train_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'))
+test_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'))
 
-with open('../data/processed_wf/'+train_year+'/train_data.dat') as f:
+with open('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -27,7 +27,7 @@ with open('../data/processed_wf/'+train_year+'/train_data.dat') as f:
    word, freq = cell.split(':')
    train_images[i,int(word)-1] = int(freq)
 
-with open('../data/processed_wf/'+test_year+'/test_data.dat') as g:
+with open('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat') as g:
 #get labels, calculate frequency sums
  for i, line in enumerate(g):
   label = line.split('  ')[0]

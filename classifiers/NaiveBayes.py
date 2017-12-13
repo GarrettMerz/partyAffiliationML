@@ -15,11 +15,11 @@ guessbadfiles = 0
 train_year = '2016'
 test_year = '2016'
 
-tokens_size = file_len('../data/processed_wf/'+train_year+'/TOKEN_LIST')
+tokens_size = file_len('../data/processed_wf/ALLYEARS/TOKEN_LIST')
 linenum = 0
 probwordgivspam, probwordgivgood, spamsum, goodsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('../data/processed_wf/'+train_year+'/train_data.dat') as f:
+with open('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -55,7 +55,7 @@ Republicanest = heapq.nsmallest(5, range(len(logprobs)), logprobs.__getitem__)
 print(Republicanest + np.ones(len(Republicanest)))
 
 #get labels
-with open('../data/processed_wf/'+test_year+'/test_data.dat') as g:
+with open('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat') as g:
  for i, line in enumerate(g):
   linenum += 1
   numdocs += 1
