@@ -2,15 +2,21 @@
 
 wf:
 [ 2019.  5266.  3633.  1427.  2975.]
+coolidg landon forsight cathol eleph
 [ 4681.  8980.  9304.  4368.  9445.]
+incident standpoint surrend hip tear
 
 bool:
 [ 2019.  5266.  3633.  6659.  5699.]
+coolidg landon forsight ovat massachusett
 [ 4681.  8980.  9445.  4368.   435.]
+incident standpoint tear hip appetit
 
 tfidf:
 [ 2815.  1721.   936.  2444.  1737.]
+dribble cold blackwel depos colo
 [ 4175.  2049.  1846.  2193.  4411.]
+hanov corrobor conced crush holm
 
 2008:
 

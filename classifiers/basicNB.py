@@ -1,11 +1,10 @@
 import numpy as np
 from operator import itemgetter
-from sklearn.svm import LinearSVC
-from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import cross_val_score
 import csv
 
-with open('data/processed_tfidf/2012/SPARSE.dat') as f:
+with open('data/processed_wf/1960/SPARSE.dat') as f:
     content = f.readlines()
 
 data = []
@@ -29,8 +28,9 @@ for i in range(0, len(data)):
 print np.array(Y).shape
 print np.matrix(X).shape
 
-svm_sm = LinearSVC(C=0.5, random_state=42, loss='hinge')
-svm_sm.fit(X, Y)
-scores = cross_val_score(svm_sm, X, Y, cv=5)
+nb = MultinomialNB()
+nb.fit(X,Y)
+
+scores = cross_val_score(nb, X, Y, cv=5)
 
 print scores.mean()
