@@ -1,0 +1,148 @@
+\documentclass[aps, prl, reprint, showpacs]{revtex4-1}
+\pdfoutput=1
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage[hyperindex,breaklinks,hidelinks,colorlinks,allcolors=blue]{hyperref} 
+
+\begin{document}
+
+\title{Classifying Party Affiliation Based on Campaign Rhetoric}
+
+\author{Rory Fitzpatrick (\textit{roryfitz}), Garrett Merz (\textit{gwmerz}), Julia Pakela (\textit{jpakela})}
+%\collaboration{ATLAS Collaboration}
+
+\begin{abstract}
+\noindent Machine learning has been vastly applied to natural language processing. We report the performance of several classification methods used to determine political party based on campaign rhetoric. We use corpora of campaign speeches from the 1960, 2008 and 2016 elections cycles. Finally, we investigate the use of classification performance as a metric for quantifying party polarization as a function of time.
+\end{abstract}
+
+%\pacs{13.38.Dg}
+
+\maketitle
+
+%%% INTRODUCTION %%%
+\section{Introduction}
+In the era of the 24/7 news cycle, political rhetoric has transformed into the stringing-together of sound bites to be swept up by the media and repeated out of context \textit{ad infinitum}. Political speech is rife with partisan buzzwords, a rhetorical structure that may lend itself to classifying party affiliation based on political discourse. In addition to providing a unique classification scheme, party affiliation classifiers could provide a metric for quantifying political polarization in a given election cycle or administration. We show that we can accurately classify political campaign speech based on the party of the speaker, and in turn use the classification performance over time to quantify party polarization. 
+
+%%% DATA %%%
+\section{Datasets and Data Processing}
+We use bipartisan campaign rhetoric curated in \cite{peters} from the 1960, 2008, and 2016 election cycles. We selected these years because they each contained a large sample of speech from both political parties and occur at dramatically different points in the country's political history. We excluded, for instance, the 2012 election cycle, because the speeches collected from the Obama campaign are all variations of the same stump speech, and would bias the classifier. Initially, words contained in the  Python \texttt{nltk} `stopwords' and `names' corpora are removed from each document. We acknowledge that there are still many names and proper nouns that are included in our resulting vocabularies. Further study could be done on the effect of removing or keeping all proper nouns (e.g. one might expect ``Reagan" to be more common in Republican speeches) but it is outside the scope of this report.
+
+We lemmatize and stem using the \texttt{nltk} \texttt{WordNetLemmatizer} and \texttt{PorterStemmer} to reduce variations in words. No effort is made to correct typos. The resulting texts are converted to the bag-of-words format using three different frequency measures: \textbf{(1)} standard term frequency (\textit{tf}), \textbf{(2)} presence or absence of a word (\textit{bool}) and \textbf{(3)} a frequency measure known as term frequency-inverse document frequency (\textit{tfidf}). The \textit{tfidf} frequency is calculated as follows:
+\begin{equation}
+    w = f_{t,d} \ln (1 + N/n_t),
+\end{equation}
+where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the total number of documents in the training set, and $n_t$ is the number of documents in the training set that contain the word. We have also chosen to add one to the argument of the log for smoothing. We do not restrict the size of the bag-of-words vocabulary.
+
+\begin{table}[h] % use table* for two-column table
+  \label{tab:data}
+  \begin{ruledtabular}
+  %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
+  \begin{tabular}{cccc}
+   & 1960 & 2008 & 2016 \\
+ \hline
+    Democrat & 598 & 362  & 76  \\
+    Republican & 311 & 222  & 82  \\
+
+ \hline
+  \end{tabular}
+  \end{ruledtabular}
+    \caption{The number of speeches available for each election cycle.}
+\end{table}
+
+%%% METHODS %%%
+\section{Classification Methods}
+Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM and NB as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers.
+
+%%% RESULTS %%%
+\section{Results}
+
+%%% CONCLUSIONS %%%
+\section{Conclusions}
+
+%\begin{figure}[h]
+%\includegraphics[width=.95\linewidth]{img/beamSchematic} 
+%\caption{CAPTION}
+%\label{fig:beam}
+%\end{figure}
+
+\begin{table} % use table* for two-column table
+  \label{tab:results}
+  \begin{ruledtabular}
+  %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
+  \begin{tabular}{ccccc}
+  Method & Freq.& 1960 & 2008 & 2016 \\
+    \hline
+ & \textit{tf} & 92.0  & 81.1 & 91.7 \\
+NB & \textit{bool} & 92.7  & 83.0 & 92.9 \\
+ & \textit{tfidf} & 91.1  & 83.9 & 93.0 \\
+ \hline
+ & \textit{wf} & ZZ  & ZZ & ZZ \\
+RB & \textit{bool} & ZZ  & ZZ & ZZ \\
+ & \textit{tfidf} & ZZ  & ZZ & ZZ \\
+ \hline
+ & \textit{tf} & 91.4 & 87.1 & 85.6 \\
+SVM & \textit{bool} & 93.3 & 91.2 & 91.2 \\
+ & \textit{tfidf} & 91.8 & 86.0 & 90.5 \\
+ \hline
+  & \textit{tf} & ZZ  & ZZ & ZZ \\
+RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
+ & \textit{tfidf} & ZZ  & ZZ & ZZ \\
+ \hline
+  \end{tabular}
+  \end{ruledtabular}
+    \caption{Classification accuracy by method and word frequency metric.}
+\end{table}
+
+\begin{table} % use table* for two-column table
+  \label{tab:results2}
+  \begin{ruledtabular}
+  %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
+  \begin{tabular}{cccc}
+  Year & Freq. & Democrat & Republican \\
+    \hline
+ & \textit{tf} & ZZ  & coolidg,   \\
+1960 & \textit{bool} & ZZ  & ZZ  \\
+ & \textit{tfidf} & ZZ  & ZZ  \\
+ \hline
+ & \textit{tf} & ZZ  & ZZ  \\
+2008 & \textit{bool} & ZZ  & ZZ  \\
+ & \textit{tfidf} & ZZ  & ZZ  \\
+ \hline
+ & \textit{tf} & ZZ  & ZZ  \\
+2016 & \textit{bool} & ZZ  & ZZ  \\
+ & \textit{tfidf} & ZZ  & ZZ  \\
+ \hline
+  \end{tabular}
+  \end{ruledtabular}
+    \caption{The words most indicative of both political parties based on election year and word frequency metric}
+\end{table}
+
+\begin{thebibliography}{7}
+
+\bibitem{chandra}
+Chandra, B. \textit{et. al.} (2007). Robust Approach for Estimating Probabilities in Naive-Bayes Classifier. \textit{International Conference on Pattern Recognition and Machine Intelligence}, 11-16.
+
+\bibitem{kwon}
+Kwon, N. \textit{et. al.} (2006). Identifying and classifying subjective claims. \textit{Proceedings of the 8th Annual International Digital Government Research Conference}, 76–81.
+
+\bibitem{mccallum}
+McCallum, A. \& Nigam, K. (1998). A comparison of event models for naive Bayes text classification. \textit{Proceedings of the 1998 Association for the Advancement of Artificial Intelligence Workshop on Learning for Text Categorization (AAAI’98)}, 41–48.
+
+\bibitem{peters}
+Peters, G.,The American Presidency Project [online]. Santa Barbara, CA: University of California (hosted), Gerhard Peters (database). Available from World Wide Web: http://www.presidency.ucsb.edu/
+
+\bibitem{thomas}
+Thomas, M. \textit{et. al.} (2006). Get out the vote: Determining support or opposition from Congressional floor-debate transcripts. \textit{Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing (EMNLP’06)}, 327–335.
+
+\bibitem{xu}
+Xu, L. \textit{et. Al.} (2006). Robust Support Vector Machine Training via Convex Outlier Ablation. \textit{Proceedings of the 21st national conference on Artificial intelligence}, Vol 1, 536-542.
+
+\bibitem{yu}
+Yu, B. \textit{et. al.} (2008). Classifying party affiliation from political speech. \textit{Journal of Information Technology \& Politics}, 5:1, 33-48, DOI: 10.1080/19331680802149608
+
+\end{thebibliography}
+
+\end{document}
