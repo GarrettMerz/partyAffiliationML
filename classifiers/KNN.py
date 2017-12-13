@@ -8,13 +8,16 @@ def file_len(fname):
             pass
     return i + 1
 
-tokens_size = file_len('../data/processed_wf/2016/TOKEN_LIST')
-train_images = np.zeros((file_len('../data/processed_wf/2016/train_data.dat'), tokens_size))
-test_images = np.zeros((file_len('../data/processed_wf/2016/test_data.dat'), tokens_size))
-train_labels = np.zeros(file_len('../data/processed_wf/2016/train_data.dat'))
-test_labels = np.zeros(file_len('../data/processed_wf/2016/test_data.dat'))
+train_year = '1960'
+test_year = '1960'
 
-with open('../data/processed_wf/2016/train_data.dat') as f:
+tokens_size = file_len('../data/processed_wf/'+train_year+'/TOKEN_LIST')
+train_images = np.zeros((file_len('../data/processed_wf/'+train_year+'/train_data.dat'), tokens_size))
+test_images = np.zeros((file_len('../data/processed_wf/'+test_year+'/test_data.dat'), tokens_size))
+train_labels = np.zeros(file_len('../data/processed_wf/'+train_year+'/train_data.dat'))
+test_labels = np.zeros(file_len('../data/processed_wf/'+test_year+'/test_data.dat'))
+
+with open('../data/processed_wf/'+train_year+'/train_data.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -24,7 +27,7 @@ with open('../data/processed_wf/2016/train_data.dat') as f:
    word, freq = cell.split(':')
    train_images[i,int(word)-1] = int(freq)
 
-with open('../data/processed_wf/2016/test_data.dat') as g:
+with open('../data/processed_wf/'+test_year+'/test_data.dat') as g:
 #get labels, calculate frequency sums
  for i, line in enumerate(g):
   label = line.split('  ')[0]
@@ -42,9 +45,9 @@ with open('../data/processed_wf/2016/test_data.dat') as g:
 #test_images = np.asarray(test_data[:,1:785])
 #test_labels = np.asarray(test_data[:,0])
 
-errorcount = 0
-klist = [1, 5, 9, 13]
+klist = [1, 10, 25, 40]
 for k in klist:
+ errorcount = 0
  for i in range(test_labels.size):
   test_image = test_images[i]
   test_label = test_labels[i]
@@ -57,4 +60,4 @@ for k in klist:
  print('for k =', end = ' ')
  print(k, end = ' ')
  print('the error is ', end = ' ')
- print(errorcount/100)
+ print(errorcount/test_labels.size)
