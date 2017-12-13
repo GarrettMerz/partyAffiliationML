@@ -7,7 +7,7 @@ import heapq
 tokens_size = 6949 # 2016
 probwordgivR, probwordgivD, Rsum, Dsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('data/processed_wf/2016/SPARSE.dat') as f:
+with open('data/processed_tfidf/2016/SPARSE.dat') as f:
    #get labels, calculate frequency sums
    for i, line in enumerate(f):
       label = line.split('  ')[0]
