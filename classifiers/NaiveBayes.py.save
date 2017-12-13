@@ -75,6 +75,6 @@ print("spammiest words are at")
 spammiest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
 print(spammiest + np.ones(len(spammiest)))
 
-unspammiest = heapq.nlargest(5, range(len(logprobs)), -1*logprobs.__getitem__)
+unspammiest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
 print(unspammiest + np.ones(len(unspammiest)))
 
