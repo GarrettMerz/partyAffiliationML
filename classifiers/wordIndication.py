@@ -1,12 +1,13 @@
 import numpy as np
 import heapq
 
-tokens_size = 10801 # 1960
-# tokens_size = 11252 # 2008
-# tokens_size = 6951 # 2016
+# tokens_size = 10797 # 1960
+# tokens_size = 11232 # 2008
+# tokens_size = 6005 # 2012
+tokens_size = 6949 # 2016
 probwordgivR, probwordgivD, Rsum, Dsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('data/processed_wf/1960/SPARSE.dat') as f:
+with open('data/processed_wf/2016/SPARSE.dat') as f:
    #get labels, calculate frequency sums
    for i, line in enumerate(f):
       label = line.split('  ')[0]
