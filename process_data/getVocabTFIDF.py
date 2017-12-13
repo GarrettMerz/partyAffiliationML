@@ -50,11 +50,14 @@ s.add('``')
 s.add('`')
 s.add('#')
 s.add('`we')
+s.add('_')
+s.add('uh')
+s.add('q')
 
 corpus = []
 party = []
 
-with io.open('filelists/files_1960.list', 'r') as filelist:
+with io.open('filelists/files_2016.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
@@ -70,6 +73,7 @@ for thisfile in allfiles:
         txt = re.sub("-", " ", txt)
         txt = re.sub("'", " ", txt)
         txt = re.sub("\.", " ", txt)
+        txt = re.sub("\*", " ", txt)
         corpus.append(txt)
 
 # print party
