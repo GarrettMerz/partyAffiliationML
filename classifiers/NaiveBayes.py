@@ -9,7 +9,7 @@ tokens_size = 12650
 linenum = 0
 probwordgivspam, probwordgivgood, spamsum, goodsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('../data/processed_wf/2008_2016/train_data.dat') as f:
+with open('../data/processed_wf/2016/train_data.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -70,11 +70,11 @@ print("republican speeches number guess is")
 print(guessbadfiles)
 print("democrat speeches number guess is")
 print(guessgoodfiles)
-print("spammiest words are at")
 
-spammiest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
-print(spammiest + np.ones(len(spammiest)))
+print("Democratic-est words are at")
+Democraticest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
+print(Democraticest + np.ones(len(Democraticest)))
 
-unspammiest = heapq.nlargest(5, range(len(logprobs)), -1*logprobs.__getitem__)
-print(unspammiest + np.ones(len(unspammiest)))
-
+print("Republican-est words are at")
+Republicanest = heapq.nsmallest(5, range(len(logprobs)), logprobs.__getitem__)
+print(Republicanest + np.ones(len(Republicanest)))

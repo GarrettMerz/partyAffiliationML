@@ -11,7 +11,7 @@ tokens_size = 12650
 linenum = 0
 probwordgivspam, probwordgivgood, spamsum, goodsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('../data/processed_wf/2008_2016/train_data.dat') as f:
+with open('../data/processed_wf/2016/train_data.dat') as f:
 #get labels, calculate frequency sums
  for i, line in enumerate(f):
   label = line.split('  ')[0]
@@ -53,7 +53,7 @@ print("Number of tokens not in train set of D speeches is")
 print(robust_good_count)
 
 #get labels
-with open('../data/processed_wf/2008_2016/test_data.dat') as g:
+with open('../data/processed_wf/2016/test_data.dat') as g:
  for i, line in enumerate(g):
   linenum += 1
   numdocs += 1
@@ -73,7 +73,7 @@ with open('../data/processed_wf/2008_2016/test_data.dat') as g:
      words_not_in_train_good += 1
     if (probwordgivgood[test] == 0):
      words_not_in_train_spam += 1
-   
+
  else logpost += np.log(probwordgivspam[test]/probwordgivgood[test])
   if (logpost > 0):
    guesslabel = 1
@@ -95,10 +95,13 @@ error = float((misclass/numdocs)*100.0)
 #print(guessbadfiles)
 #print("democrat speeches number guess is")
 #print(guessgoodfiles)
-#print("spammiest words are at")
+
+#print("Democratic-est words are at")
+#Democraticest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
+#print(Democraticest + np.ones(len(Democraticest)))
+
+#print("Republican-est words are at")
+#Republicanest = heapq.nsmallest(5, range(len(logprobs)), logprobs.__getitem__)
+#print(Republicanest + np.ones(len(Republicanest)))
 
 
-
-
-#spammiest = heapq.nlargest(5, range(len(logprobs)), logprobs.__getitem__)
-#print(spammiest + np.ones(len(spammiest)))

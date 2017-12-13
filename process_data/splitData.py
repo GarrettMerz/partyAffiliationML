@@ -1,4 +1,4 @@
-with open('outfile.dat') as f:
+with open('SPARSE.dat') as f:
     content = f.readlines()
 
 i = 0
