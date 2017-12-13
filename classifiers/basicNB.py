@@ -4,7 +4,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import cross_val_score
 import csv
 
-with open('data/processed_wf/1960/SPARSE.dat') as f:
+with open('data/processed_tfidf/2016/SPARSE.dat') as f:
     content = f.readlines()
 
 data = []
