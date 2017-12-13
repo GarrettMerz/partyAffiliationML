@@ -57,7 +57,7 @@ s.add('q')
 corpus = []
 party = []
 
-with io.open('filelists/files_2016.list', 'r') as filelist:
+with io.open('filelists/files_2008.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
@@ -88,17 +88,17 @@ print X.toarray()
 
 Y = X.toarray()
 
-outfile = open("SPARSE.dat", "w")
+# outfile = open("SPARSE.dat", "w")
 
-for i in range(0, len(Y)):
-    thisline = '' + str(party[i]) + '  '
-    for j in range(0, len(Y[i])):
-        if Y[i][j] != 0:
-            thisline += str(j+1) + ':' + str(Y[i][j]) + ' '
-    thisline += '\n'
-    outfile.write(thisline)
+# for i in range(0, len(Y)):
+#     thisline = '' + str(party[i]) + '  '
+#     for j in range(0, len(Y[i])):
+#         if Y[i][j] != 0:
+#             thisline += str(j+1) + ':' + str(Y[i][j]) + ' '
+#     thisline += '\n'
+#     outfile.write(thisline)
 
-outfile.close()
+# outfile.close()
 
 outfile2x = open("DENSE.X.dat", "w")
 outfile2y = open("DENSE.Y.dat", "w")
@@ -115,11 +115,10 @@ for i in range(0, len(Y)):
 outfile2x.close()
 outfile2y.close()
 
-token_list = open("TOKEN_LIST", "w")
+# token_list = open("TOKEN_LIST", "w")
 
-for i in range(0, len(all_tokens)):
-    thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
-    token_list.write(thisline)
-
-# print all_tokens
-# print len(all_tokens)
+# for i in range(0, len(all_tokens)):
+#     thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
+#     token_list.write(thisline)
+ 
+#  token_list.close()

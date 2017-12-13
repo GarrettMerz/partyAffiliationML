@@ -95,34 +95,43 @@ for i in range(0, len(Y)):
         if Y[i][j] != 0:
             nt[j] += 1
 
-outfile = open("SPARSE.dat", "w")
-
-for i in range(0, len(Y)):
-    thisline = '' + str(party[i]) + '  '
-    for j in range(0, len(Y[i])):
-        if Y[i][j] != 0:
-            thisweight = Y[i][j] * np.log(1 + float(N)/nt[j])
-            thisline += str(j+1) + ':' + str(thisweight) + ' '
-    thisline += '\n'
-    outfile.write(thisline)
-
-outfile.close()
-
-outfile2 = open("DENSE.dat", "w")
+# outfile = open("SPARSE.dat", "w")
 
 # for i in range(0, len(Y)):
-#     thisline = '' + str(party[i]) + ','
+#     thisline = '' + str(party[i]) + '  '
 #     for j in range(0, len(Y[i])):
 #         if Y[i][j] != 0:
 #             thisweight = Y[i][j] * np.log(1 + float(N)/nt[j])
 #             thisline += str(j+1) + ':' + str(thisweight) + ' '
 #     thisline += '\n'
-#     outfile2.write(thisline)
+#     outfile.write(thisline)
 
-# outfile2.close()
+# outfile.close()
 
-token_list = open("TOKEN_LIST", "w")
+outfile2x = open("DENSE.X.dat", "w")
+outfile2y = open("DENSE.Y.dat", "w")
 
-for i in range(0, len(all_tokens)):
-    thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
-    token_list.write(thisline)
+for i in range(0, len(Y)):
+    thislineY = '' + str(party[i]) + '\n'
+    thislineX = ''
+    for j in range(0, len(Y[i])):
+        if Y[i][j] != 0:
+            thisweight = Y[i][j] * np.log(1 + float(N)/nt[j])
+            thislineX += str(thisweight) + ','
+        else:
+            thislineX += '0,'
+    thislineX += '\n'
+    outfile2x.write(thislineX)
+    outfile2y.write(thislineY)
+
+outfile2x.close()
+outfile2y.close()
+
+# token_list = open("TOKEN_LIST", "w")
+
+# for i in range(0, len(all_tokens)):
+#     thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
+#     token_list.write(thisline)
+
+# token_list.close()
+

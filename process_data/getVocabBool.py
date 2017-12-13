@@ -88,23 +88,40 @@ print X.toarray()
 
 Y = X.toarray()
 
-outfile = open("SPARSE.dat", "w")
+# outfile = open("SPARSE.dat", "w")
+
+# for i in range(0, len(Y)):
+#     thisline = '' + str(party[i]) + '  '
+#     for j in range(0, len(Y[i])):
+#         if Y[i][j] != 0:
+#             thisline += str(j+1) + ':1 '
+#     thisline += '\n'
+#     outfile.write(thisline)
+
+# outfile.close()
+
+outfile2x = open("DENSE.X.dat", "w")
+outfile2y = open("DENSE.Y.dat", "w")
 
 for i in range(0, len(Y)):
-    thisline = '' + str(party[i]) + '  '
+    thislineY = '' + str(party[i]) + '\n'
+    thislineX = ''
     for j in range(0, len(Y[i])):
         if Y[i][j] != 0:
-            thisline += str(j+1) + ':1 '
-    thisline += '\n'
-    outfile.write(thisline)
+            thislineX += '1,'
+        else:
+            thislineX += '0,'
+    thislineX += '\n'
+    outfile2x.write(thislineX)
+    outfile2y.write(thislineY)
 
-outfile.close()
+outfile2x.close()
+outfile2y.close()
 
-token_list = open("TOKEN_LIST", "w")
+# token_list = open("TOKEN_LIST", "w")
 
-for i in range(0, len(all_tokens)):
-    thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
-    token_list.write(thisline)
+# for i in range(0, len(all_tokens)):
+#     thisline = '' + str(i+1) + ' ' + all_tokens[i] + '\n'
+#     token_list.write(thisline)
 
-# print all_tokens
-# print len(all_tokens)
+# token_list.close()
