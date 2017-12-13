@@ -54,7 +54,7 @@ s.add('`we')
 corpus = []
 party = []
 
-with io.open('filelists/files_2008.list', 'r') as filelist:
+with io.open('filelists/files_2016.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:

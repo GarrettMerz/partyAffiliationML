@@ -54,7 +54,7 @@ s.add('`we')
 corpus = []
 party = []
 
-with io.open('allfiles2008.list', 'r') as filelist:
+with io.open('filelists/files_2016.list', 'r') as filelist:
     allfiles = filelist.readlines()
 
 for thisfile in allfiles:
@@ -78,8 +78,8 @@ vectorizer = CountVectorizer(stop_words=s, tokenizer=LemmaTokenizer(), max_featu
 X = vectorizer.fit_transform(corpus)
 all_tokens = vectorizer.get_feature_names()
 
-# print all_tokens
-# print X.toarray()
+print all_tokens
+print X.toarray()
 
 Y = X.toarray()
 
@@ -91,10 +91,7 @@ for i in range(0, len(Y)):
         if Y[i][j] != 0:
             nt[j] += 1
 
-print N
-print nt
-
-outfile = open("outfile.dat", "w")
+outfile = open("SPARSE.dat", "w")
 
 for i in range(0, len(Y)):
     thisline = '' + str(party[i]) + '  '
