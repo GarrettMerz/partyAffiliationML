@@ -15,7 +15,7 @@
 %\collaboration{ATLAS Collaboration}
 
 \begin{abstract}
-\noindent Machine learning has been vastly applied to natural language processing. We report the performance of several classification methods used to determine political party based on campaign rhetoric. We use corpora of campaign speeches from the 1960, 2008 and 2016 elections cycles. Finally, we investigate the use of classification performance as a metric for quantifying party polarization as a function of time.
+\noindent Machine learning has been vastly applied to natural language processing. We report the performance of several classification methods used to determine political party based on campaign rhetoric. We use corpora of campaign speeches from the 1960, 2008 and 2016 election cycles. Finally, we investigate the use of classification performance as a metric for quantifying party polarization as a function of time.
 \end{abstract}
 
 %\pacs{13.38.Dg}
@@ -34,7 +34,7 @@ We lemmatize and stem using the \texttt{nltk} \texttt{WordNetLemmatizer} and \te
 \begin{equation}
     w = f_{t,d} \ln (1 + N/n_t),
 \end{equation}
-where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the total number of documents in the training set, and $n_t$ is the number of documents in the training set that contain the word. We have also chosen to add one to the argument of the log for smoothing. We do not restrict the size of the bag-of-words vocabulary.
+where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the total number of documents in the training set, and $n_t$ is the number of documents in the training set that contain the word. We have also chosen to add one to the argument of the log for smoothing. We do not restrict the size of the bag-of-words vocabulary. Further study could be done to determine whether a restricted vocabulary (e.g. the 5000 most common training words) improves or worsens classification ability.
 
 \begin{table}[h] % use table* for two-column table
   \label{tab:data}
@@ -54,7 +54,7 @@ where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the t
 
 %%% METHODS %%%
 \section{Classification Methods}
-Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM  as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers. We also test classification methods less traditionally used for text classification: logistic regression (LR) and $k$-nearest neighbors (KNN). We began by training an cross-validating within a single election cycle for each classification method and each word frequency measure.  Then, we trained on a single election cycle and tested on the remaining two election cycles. We also report, based on the NB method, the words most indicative and Democratic and Republican speech in each election cycle and across all three cycles.
+Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM  as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers. We also test classification methods less traditionally used for text classification: logistic regression (LR) and $k$-nearest neighbors (KNN). We begin by training an cross-validating within a single election cycle for each classification method and each word frequency measure.  Then, we train on a single election cycle and test on the remaining two election cycles. We also report, based on the NB method, the words most indicative and Democratic and Republican speech in each election cycle and across all three cycles.
 
 %%% RESULTS %%%
 \section{Results}
@@ -63,14 +63,14 @@ Similar studies have been done using floor speech from the Senate and House of R
 
 Results shown in Table \ref{tab:crossval}.
 
-\subsection{Predictions between years}
-Are certain years more or less predictive of other years?
+We find that the boolean word frequency measure does best in cross validation tests for NB, SVM and LR.
 
-Need to make a table of results.
+\subsection{Predictions between years}
+We expect party values and talking points to evolve over time, we expect at least some predictive power when training on data from one election cycle and testing on another. Classification tends to do better when trained and tested on election cycles that are closer temporally. This is expected; the topics of interest change less between consecutive cycles than over the course of several decades. This is evident from the results in Table \ref{tab:results}. 2008 and 2016 are far better at predicting party affiliation in speeches between the two cycles than either is at predicting party affiliation in the 1960 election. In fact, when training on 1960 and testing on 2008/2016 and vice versa, we often to do worse than randomly guessing. This is reasonably consistent across classification schemes and word frequency metrics. We find that the most common misclassifications are 1960s Republicans being labeled as Democrat when trained with 2008 and 2016 data.
 
 \subsection{Predictive words}
 
-Results shown in Table \ref{tab:words}.
+The most predictive words for each party for each election cycle (and for all three combined) are shown in Table \ref{tab:words}. Particularly for the \textit{tf} and \textit{bool} frequency measures, the most common words strike a chord as the common sticking point for a particular election cycle. Though not listed, the fourth most indicative word for Democratic speech in 1960 was ``catholic"; Kennedy was the first Catholic president. In 2008, race, of course, was a prominent topic, but so was economic strategy; ``trickle" (as in ``trickle-down economics," coined during the Reagan era) was a common word used by the Democrats to oppose large tax cuts to the wealthy. McCain commonly used the phrase ``shoulder a rifle" when expressing support for the troops --- he was a well-known war veteran himself. In 2016 multiple top words refer to wealth (``billionaire" and ``millionaire") and equality (``fairer" and ``ineq," the stem of words like ``inequality"). There's an indirect reference to Clinton's emails (``delet" --- this was a common talking point for Trump). And healthcare made the top contenders in 2016 as well: ``obamacar" was indicative of Republican speech (it was yet another common talking point for Trump). These words provide a unique lens into the politics of the era and are interesting in their own right. We see signs of the most prominent social, economic, and political issues during each election period.
 
 \begin{table} % use table* for two-column table
   \begin{ruledtabular}
@@ -86,9 +86,9 @@ NB & \textit{bool} & 92.7  & 83.0 & 92.9 \\
 SVM & \textit{bool} & 93.3 & 91.2 & 91.2 \\
  & \textit{tfidf} & 91.8 & 86.0 & 90.5 \\
  \hline
-   & \textit{tf} & ZZ  & ZZ & ZZ \\
-LR & \textit{bool} & ZZ  & ZZ & ZZ \\
- & \textit{tfidf} & ZZ  & ZZ & ZZ \\
+   & \textit{tf} & 89.8  & 88.2 & 85.6 \\
+LR & \textit{bool} & 93.3  & 92.9 & 91.2 \\
+ & \textit{tfidf} & 90.1  & 88.3 & 89.3 \\
  \hline
    & \textit{tf} & ZZ  & ZZ & ZZ \\
 KNN & \textit{bool} & ZZ  & ZZ & ZZ \\
@@ -110,17 +110,17 @@ RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
   \begin{tabular}{ccccc}
    Method & Training Year & 1960 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2008 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2016 (\textit{tf}/\textit{bool}/\textit{tfidf}) \\
     \hline
- & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
-NB & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
- & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ & 1960 & ---  & \textit{41.8}/\textit{43.2}/46.2 & 46.5/53.5/48.4 \\
+NB & 2008 & \textit{43.6}/54.1/48.2  & --- & 58.6/54.8/\textbf{63.1} \\
+ & 2016 & \textbf{63.4}/\textbf{64.0}/\textbf{64.1}  & \textbf{63.5}/\textbf{63.2}/\textbf{63.4} & --- \\
  \hline
-  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
-SVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
- & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+  & 1960 & ---  & \textit{42.8}/51.9/\textit{43.3} & 54.8/47.8/48.4 \\
+SVM & 2008 & \textit{42.2}/48.0/46.8  & --- & 58.6/54.8/48.4 \\
+ & 2016 & \textit{40.4}/53.5/49.5  & \textbf{66.1}/\textbf{66.8}/\textbf{70.0} & --- \\
  \hline
-  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
-LR & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
- & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+  & 1960 & ---  & 47.1/51.0/48.3 & 54.1/47.1/55.4 \\
+LR & 2008 & \textit{41.3}/47.1/\textit{44.4}  & --- & \textbf{66.2}/59.2/50.3 \\
+ & 2016 & 51.8/55.9/51.5  & \textbf{67.1}/\textbf{67.8}/\textbf{71.2} & --- \\
  \hline
   & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
 KNN & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
@@ -132,33 +132,37 @@ RSVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
  \hline
   \end{tabular}
   \end{ruledtabular}
-    \caption{CAPTION results for training on one year and testing on another}
+    \caption{CAPTION results for training on one year and testing on another \textbf{bold} $> 60\%$, \textit{italics} $< 45\%$.}
      \label{tab:results}
 \end{table*}
 
-\begin{table} % use table* for two-column table
+\begin{table*} % use table* for two-column table
   \begin{ruledtabular}
   %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
   \begin{tabular}{cccc}
   Year & Freq. & Democrat & Republican \\
     \hline
- & \textit{tf} & ZZ  & coolidg,   \\
-1960 & \textit{bool} & ZZ  & ZZ  \\
- & \textit{tfidf} & ZZ  & ZZ  \\
+ & \textit{tf} & coolidg, landon, forsight  & incident, standpoint, surrend   \\
+1960 & \textit{bool} & coolidg, landon, forsight   & incident, standpoint, tear  \\
+ & \textit{tfidf} & dribble, cold, blackwel  & hanov, corrobor, conced  \\
  \hline
- & \textit{tf} & ZZ  & ZZ  \\
-2008 & \textit{bool} & ZZ  & ZZ  \\
- & \textit{tfidf} & ZZ  & ZZ  \\
+ & \textit{tf} & dime, trickl, racial  & brokaw, constru, jihadist  \\
+2008 & \textit{bool} & dime, trickl, workplac  & rifl, despis, discretionari  \\
+ & \textit{tfidf} & bricklay, highli, jindal  & assuage, dispatch, best  \\
  \hline
- & \textit{tf} & ZZ  & ZZ  \\
-2016 & \textit{bool} & ZZ  & ZZ  \\
- & \textit{tfidf} & ZZ  & ZZ  \\
+ & \textit{tf} & billionair, wealthiest, vermont  & obamacar, renegoti, delet   \\
+2016 & \textit{bool} & billionair, fairer, ineq   & delet, renegoti, salut    \\
+ & \textit{tfidf} & bad, quito, protest    & machin, outlcass, conspicu   \\
+ \hline
+  & \textit{tf} & billionare, coolidg, landon   & standpoint, obamacar, incident  \\
+combined & \textit{bool} & coolidg, billionare, landon   & standpoint, delet, incident  \\
+ & \textit{tfidf} & alumnu, avert, compulsori  & animos, downplay, barren  \\
  \hline
   \end{tabular}
   \end{ruledtabular}
     \caption{The words most indicative of both political parties based on election year and word frequency metric.}
     \label{tab:words}
-\end{table}
+\end{table*}
 
 
 %%% CONCLUSIONS %%%

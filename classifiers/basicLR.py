@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 import csv
 
-with open('data/processed_wf/2016/SPARSE.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE1960.dat') as f:
     content = f.readlines()
 
 data = []
@@ -17,7 +17,7 @@ for line in content:
       w.append((wtemp[i].split(":")[0], wtemp[i].split(":")[1]))
    data.append((y, w))
 
-X = np.zeros((len(data), 11253)) # matrix indexed by cmat[di-1][wj]
+X = np.zeros((len(data), 16244)) # matrix indexed by cmat[di-1][wj]
 Y = np.zeros(len(data))
 
 for i in range(0, len(data)):

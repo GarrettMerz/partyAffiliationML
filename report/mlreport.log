@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  14 DEC 2017 09:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  14 DEC 2017 11:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -418,37 +418,39 @@ Missing character: There is no â in font cmr9!
 Missing character: There is no € in font cmr9!
 Missing character: There is no “ in font cmr9!
 
+[2]
 No file mlreport.bbl.
-[2] [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 203.
+[3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 207.
  (./mlreport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 203.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 203.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 207.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 207.
 Package rerunfilecheck Info: File `mlreport.out' has not changed.
 (rerunfilecheck)             Checksum: 353D1E8F3EDC0BA0F46030683B46536C;711.
  ) 
 Here is how much of TeX's memory you used:
- 7303 strings out of 492995
- 105316 string characters out of 6132704
- 235921 words of memory out of 5000000
- 10776 multiletter control sequences out of 15000+600000
+ 7304 strings out of 492995
+ 105326 string characters out of 6132704
+ 220957 words of memory out of 5000000
+ 10777 multiletter control sequences out of 15000+600000
  7543 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,8n,28p,1428b,381s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,8n,28p,1470b,474s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
-ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local
-/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on mlreport.pdf (3 pages, 148633 bytes).
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on mlreport.pdf (3 pages, 162187 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
- 115 compressed objects within 2 object streams
+ 138 PDF objects out of 1000 (max. 8388607)
+ 119 compressed objects within 2 object streams
  26 named destinations out of 1000 (max. 500000)
  89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
