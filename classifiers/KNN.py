@@ -8,56 +8,63 @@ def file_len(fname):
             pass
     return i + 1
 
-train_year = '1960'
-test_year = '1960'
+train_years = ['1960','2008','2016']
+test_years = ['1960','2008','2016']
 
 tokens_size = file_len('../data/processed_wf/ALLYEARS/TOKEN_LIST')
-train_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'), tokens_size))
-test_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'), tokens_size))
-train_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'))
-test_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'))
 
-with open('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat') as f:
-#get labels, calculate frequency sums
- for i, line in enumerate(f):
-  label = line.split('  ')[0]
-  train_labels[i] = int(label)
-  text = line.split('  ')[1]
-  for cell in text.strip().split(' '):
-   word, freq = cell.split(':')
-   train_images[i,int(word)-1] = int(freq)
+for train_year in train_years:
+ for test_year in test_years:
 
-with open('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat') as g:
-#get labels, calculate frequency sums
- for i, line in enumerate(g):
-  label = line.split('  ')[0]
-  test_labels[i] = int(label)
-  text = line.split('  ')[1]
-  for cell in text.strip().split(' '):
-   word, freq = cell.split(':')
-   test_images[i,int(word)-1] = int(freq)
+  print("train year is " + train_year + "; test year is " +test_year)
+  train_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'), tokens_size))
+  test_images = np.zeros((file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'), tokens_size))
+  train_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat'))
+  test_labels = np.zeros(file_len('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat'))
 
-#print(train_images)
-#print(test_labels.shape)
+  with open('../data/processed_wf/ALLYEARS/train_data'+train_year+'.dat') as f:
+  #get labels, calculate frequency sums
+   for i, line in enumerate(f):
+    label = line.split('  ')[0]
+    train_labels[i] = int(label)
+    text = line.split('  ')[1]
+    for cell in text.strip().split(' '):
+     word, freq = cell.split(':')
+     train_images[i,int(word)-1] = int(freq)
 
-#train_images = np.asarray(train_data[:,1:785])
-#train_labels = np.asarray(train_data[:,0])
-#test_images = np.asarray(test_data[:,1:785])
-#test_labels = np.asarray(test_data[:,0])
+  with open('../data/processed_wf/ALLYEARS/test_data'+test_year+'.dat') as g:
+  #get labels, calculate frequency sums
+   for i, line in enumerate(g):
+    label = line.split('  ')[0]
+    test_labels[i] = int(label)
+    text = line.split('  ')[1]
+    for cell in text.strip().split(' '):
+     word, freq = cell.split(':')
+     test_images[i,int(word)-1] = int(freq)
 
-klist = [1, 10, 25, 40]
-for k in klist:
- errorcount = 0
- for i in range(test_labels.size):
-  test_image = test_images[i]
-  test_label = test_labels[i]
-  distances = [(np.linalg.norm((test_image - image), 1), label) for (image, label) in zip(train_images, train_labels)]
-  distsort = sorted(distances, key = lambda tup: tup[0])
-  k_labels = [label for (_, label) in distsort[0:k]]
-  win_label, freq = Counter(k_labels).most_common()[0]
-  if (int(win_label) != int(test_label)):
-   errorcount += 1
- print('for k =', end = ' ')
- print(k, end = ' ')
- print('the error is ', end = ' ')
- print(errorcount/test_labels.size)
+  klist = [1]
+  for k in klist:
+   errorcount = 0
+   repguesses = 0
+   demguesses = 0
+   for i in range(test_labels.size):
+    test_image = test_images[i]
+    test_label = test_labels[i]
+    distances = [(np.linalg.norm((test_image - image), 1), label) for (image, label) in zip(train_images, train_labels)]
+    distsort = sorted(distances, key = lambda tup: tup[0])
+    k_labels = [label for (_, label) in distsort[0:k]]
+    win_label, freq = Counter(k_labels).most_common()[0]
+    if (int(win_label) != int(test_label)):
+     errorcount += 1
+    if int(win_label) == 1:
+     demguesses += 1
+    if int(win_label) == -1:
+     repguesses += 1
+   print('for k =', end = ' ')
+   print(k, end = ' ')
+   print('the error is ', end = ' ')
+   print((errorcount/test_labels.size) * 100.0)
+   print('Republican guesses is')
+   print(repguesses)
+   print('Democratic guesses is')
+   print(demguesses)
