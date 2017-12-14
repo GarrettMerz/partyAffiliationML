@@ -4,10 +4,37 @@ import heapq
 # tokens_size = 10797 # 1960
 # tokens_size = 11232 # 2008
 # tokens_size = 6005 # 2012
-tokens_size = 6949 # 2016
+# tokens_size = 6949 # 2016
+tokens_size = 16243 # all
 probwordgivR, probwordgivD, Rsum, Dsum, logprobs = [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size, [0]*tokens_size
 
-with open('data/processed_tfidf/2016/SPARSE.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE1960.dat') as f:
+   #get labels, calculate frequency sums
+   for i, line in enumerate(f):
+      label = line.split('  ')[0]
+      text = line.split('  ')[1]
+      # print i
+      for cell in text.strip().split(' '):
+         word, freq = cell.split(':')
+         if int(label) == 1:
+            Rsum[int(word)-1] += float(freq)
+         if int(label) == -1:
+            Dsum[int(word)-1] += float(freq)
+
+with open('data/processed_tfidf/ALLYEARS/SPARSE2008.dat') as f:
+   #get labels, calculate frequency sums
+   for i, line in enumerate(f):
+      label = line.split('  ')[0]
+      text = line.split('  ')[1]
+      # print i
+      for cell in text.strip().split(' '):
+         word, freq = cell.split(':')
+         if int(label) == 1:
+            Rsum[int(word)-1] += float(freq)
+         if int(label) == -1:
+            Dsum[int(word)-1] += float(freq)
+
+with open('data/processed_tfidf/ALLYEARS/SPARSE2016.dat') as f:
    #get labels, calculate frequency sums
    for i, line in enumerate(f):
       label = line.split('  ')[0]
