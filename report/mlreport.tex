@@ -59,6 +59,8 @@ Similar studies have been done using floor speech from the Senate and House of R
 %%% RESULTS %%%
 \section{Results}
 
+We use both cross validation and traditional training/testing to gain insights into partisanship in US campaigns for the 1960, 2008 and 2016 election cycles. We use cross validation within single election cycles to optimize model parameters (e.g. $C$ in SVM or $k$ in KNN). Comparing the cross validation scores between election cycles can give some insight into degree of polarization between parties; if parties are highly polarized, cross validation scores should be greater. We then train with data from one election cycle and test on the remaining two. This can quantify the degree to which party lines shift between election cycles. The results for each set of tests are summarized below.
+
 \subsection{Cross validation}
 
 Results shown in Table \ref{tab:crossval}.
