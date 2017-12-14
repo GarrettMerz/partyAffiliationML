@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 DEC 2017 14:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  14 DEC 2017 09:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -402,10 +402,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 43.
 [1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 128.
-
 Missing character: There is no â in font cmr9!
 Missing character: There is no € in font cmr9!
 Missing character: There is no “ in font cmr9!
@@ -421,23 +417,24 @@ Missing character: There is no ™ in font cmti9!
 Missing character: There is no â in font cmr9!
 Missing character: There is no € in font cmr9!
 Missing character: There is no “ in font cmr9!
+
 No file mlreport.bbl.
-[2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 148.
+[2] [3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 203.
  (./mlreport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 148.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 148.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 203.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 203.
 Package rerunfilecheck Info: File `mlreport.out' has not changed.
-(rerunfilecheck)             Checksum: 46560FFA6E44438294EE42DC7BEA6FC5;512.
+(rerunfilecheck)             Checksum: 353D1E8F3EDC0BA0F46030683B46536C;711.
  ) 
 Here is how much of TeX's memory you used:
- 7291 strings out of 492995
- 105181 string characters out of 6132704
- 227674 words of memory out of 5000000
- 10769 multiletter control sequences out of 15000+600000
+ 7303 strings out of 492995
+ 105316 string characters out of 6132704
+ 235921 words of memory out of 5000000
+ 10776 multiletter control sequences out of 15000+600000
  7543 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,8n,28p,940b,461s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,8n,28p,1428b,381s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
@@ -448,10 +445,10 @@ ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/loca
 l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local
 /texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on mlreport.pdf (2 pages, 142196 bytes).
+Output written on mlreport.pdf (3 pages, 148633 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
- 21 named destinations out of 1000 (max. 500000)
- 65 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 

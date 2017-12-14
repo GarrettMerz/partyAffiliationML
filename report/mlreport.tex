@@ -54,22 +54,25 @@ where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the t
 
 %%% METHODS %%%
 \section{Classification Methods}
-Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM and NB as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers.
+Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM  as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers. We also test classification methods less traditionally used for text classification: logistic regression (LR) and $k$-nearest neighbors (KNN). We began by training an cross-validating within a single election cycle for each classification method and each word frequency measure.  Then, we trained on a single election cycle and tested on the remaining two election cycles. We also report, based on the NB method, the words most indicative and Democratic and Republican speech in each election cycle and across all three cycles.
 
 %%% RESULTS %%%
 \section{Results}
 
-%%% CONCLUSIONS %%%
-\section{Conclusions}
+\subsection{Cross validation}
 
-%\begin{figure}[h]
-%\includegraphics[width=.95\linewidth]{img/beamSchematic} 
-%\caption{CAPTION}
-%\label{fig:beam}
-%\end{figure}
+Results shown in Table \ref{tab:crossval}.
+
+\subsection{Predictions between years}
+Are certain years more or less predictive of other years?
+
+Need to make a table of results.
+
+\subsection{Predictive words}
+
+Results shown in Table \ref{tab:words}.
 
 \begin{table} % use table* for two-column table
-  \label{tab:results}
   \begin{ruledtabular}
   %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
   \begin{tabular}{ccccc}
@@ -79,13 +82,17 @@ Similar studies have been done using floor speech from the Senate and House of R
 NB & \textit{bool} & 92.7  & 83.0 & 92.9 \\
  & \textit{tfidf} & 91.1  & 83.9 & 93.0 \\
  \hline
- & \textit{wf} & ZZ  & ZZ & ZZ \\
-RB & \textit{bool} & ZZ  & ZZ & ZZ \\
- & \textit{tfidf} & ZZ  & ZZ & ZZ \\
- \hline
  & \textit{tf} & 91.4 & 87.1 & 85.6 \\
 SVM & \textit{bool} & 93.3 & 91.2 & 91.2 \\
  & \textit{tfidf} & 91.8 & 86.0 & 90.5 \\
+ \hline
+   & \textit{tf} & ZZ  & ZZ & ZZ \\
+LR & \textit{bool} & ZZ  & ZZ & ZZ \\
+ & \textit{tfidf} & ZZ  & ZZ & ZZ \\
+ \hline
+   & \textit{tf} & ZZ  & ZZ & ZZ \\
+KNN & \textit{bool} & ZZ  & ZZ & ZZ \\
+ & \textit{tfidf} & ZZ  & ZZ & ZZ \\
  \hline
   & \textit{tf} & ZZ  & ZZ & ZZ \\
 RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
@@ -93,11 +100,43 @@ RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
  \hline
   \end{tabular}
   \end{ruledtabular}
-    \caption{Classification accuracy by method and word frequency metric.}
+    \caption{Cross validation scores by method and word frequency metric.}
+     \label{tab:crossval}
 \end{table}
 
+\begin{table*} % use table* for two-column table
+  \begin{ruledtabular}
+  %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
+  \begin{tabular}{ccccc}
+   Method & Training Year & 1960 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2008 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2016 (\textit{tf}/\textit{bool}/\textit{tfidf}) \\
+    \hline
+ & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
+NB & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
+ & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ \hline
+  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
+SVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
+ & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ \hline
+  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
+LR & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
+ & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ \hline
+  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
+KNN & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
+ & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ \hline
+  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
+RSVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
+ & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+ \hline
+  \end{tabular}
+  \end{ruledtabular}
+    \caption{CAPTION results for training on one year and testing on another}
+     \label{tab:results}
+\end{table*}
+
 \begin{table} % use table* for two-column table
-  \label{tab:results2}
   \begin{ruledtabular}
   %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
   \begin{tabular}{cccc}
@@ -117,8 +156,24 @@ RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
  \hline
   \end{tabular}
   \end{ruledtabular}
-    \caption{The words most indicative of both political parties based on election year and word frequency metric}
+    \caption{The words most indicative of both political parties based on election year and word frequency metric.}
+    \label{tab:words}
 \end{table}
+
+
+%%% CONCLUSIONS %%%
+\section{Conclusions}
+
+Further study could be done to expand the dataset to examine the change of rhetoric from year to year and explore how long a particular election cycle might be predictive for future election cycles.
+
+Another confounding factor may be the presence or absence of an incumbent running in the election for a particular year. This candidate would have no opponent within their own party and may speak differently as a result.
+
+%\begin{figure}[h]
+%\includegraphics[width=.95\linewidth]{img/beamSchematic} 
+%\caption{CAPTION}
+%\label{fig:beam}
+%\end{figure}
+
 
 \begin{thebibliography}{7}
 
