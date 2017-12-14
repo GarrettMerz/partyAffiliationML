@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 import csv
 
-with open('data/processed_wf/ALLYEARS/SPARSE1960.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE2016.dat') as f:
     content = f.readlines()
 
 data = []
@@ -37,7 +37,7 @@ print scores.mean()
 
 
 # testing
-with open('data/processed_wf/ALLYEARS/SPARSE2008.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE2008.dat') as f:
     content = f.readlines()
 
 data = []

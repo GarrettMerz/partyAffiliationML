@@ -5,7 +5,7 @@ from sklearn.model_selection import cross_val_score
 import csv
 
 # training and cross validation
-with open('SPARSE2008.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE2016.dat') as f:
     content = f.readlines()
 
 data = []
@@ -36,7 +36,7 @@ scores = cross_val_score(svm_sm, X, Y, cv=5)
 print scores.mean()
 
 # testing
-with open('SPARSE1960.dat') as f:
+with open('data/processed_tfidf/ALLYEARS/SPARSE2008.dat') as f:
     content = f.readlines()
 
 data = []
