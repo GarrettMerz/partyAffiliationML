@@ -5,6 +5,10 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{subfigure}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{2cm}}
 \usepackage[hyperindex,breaklinks,hidelinks,colorlinks,allcolors=blue]{hyperref} 
 
 \begin{document}
@@ -12,52 +16,113 @@
 \title{Classifying Party Affiliation Based on Campaign Rhetoric}
 
 \author{Rory Fitzpatrick (\textit{roryfitz}), Garrett Merz (\textit{gwmerz}), Julia Pakela (\textit{jpakela})}
-%\collaboration{ATLAS Collaboration}
 
 \begin{abstract}
 \noindent Machine learning has been vastly applied to natural language processing. We report the performance of several classification methods used to determine political party based on campaign rhetoric. We use corpora of campaign speeches from the 1960, 2008 and 2016 election cycles. Finally, we investigate the use of classification performance as a metric for quantifying party polarization as a function of time.
 \end{abstract}
 
-%\pacs{13.38.Dg}
-
 \maketitle
 
 %%% INTRODUCTION %%%
 \section{Introduction}
-In the era of the 24/7 news cycle, political rhetoric has transformed into the stringing-together of sound bites to be swept up by the media and repeated out of context \textit{ad infinitum}. Political speech is rife with partisan buzzwords, a rhetorical structure that may lend itself to classifying party affiliation based on political discourse. In addition to providing a unique classification scheme, party affiliation classifiers could provide a metric for quantifying political polarization in a given election cycle or administration. We show that we can accurately classify political campaign speech based on the party of the speaker, and in turn use the classification performance over time to quantify party polarization. 
+In the era of the 24/7 news cycle, political rhetoric has transformed into the stringing-together of sound bites to be swept up by the media and repeated out of context \textit{ad infinitum}. Political speech is rife with partisan buzzwords, a rhetorical structure that may lend itself to classifying party affiliation based on political discourse. In addition to providing a unique classification scheme, party affiliation classifiers could provide a metric for quantifying political polarization in a given election cycle or administration. Classifiers could also be used to measure change in party platforms over the course of several election cycles. We show that we can accurately classify political campaign speech based on the party of the speaker, and in turn use the classification performance over time to quantify party polarization. 
 
 %%% DATA %%%
 \section{Datasets and Data Processing}
-We use bipartisan campaign rhetoric curated in \cite{peters} from the 1960, 2008, and 2016 election cycles. We selected these years because they each contained a large sample of speech from both political parties and occur at dramatically different points in the country's political history. We excluded, for instance, the 2012 election cycle, because the speeches collected from the Obama campaign are all variations of the same stump speech, and would bias the classifier. Initially, words contained in the  Python \texttt{nltk} `stopwords' and `names' corpora are removed from each document. We acknowledge that there are still many names and proper nouns that are included in our resulting vocabularies. Further study could be done on the effect of removing or keeping all proper nouns (e.g. one might expect ``Reagan" to be more common in Republican speeches) but it is outside the scope of this report.
+We use bipartisan campaign rhetoric curated in \cite{peters} from the 1960, 2008, and 2016 election cycles. We selected these years because they each contained a large sample of speech from both political parties and occur at dramatically different points in the country's political history. We excluded, for instance, the 2012 election cycle, because the speeches collected from the Obama campaign are all variations of the same stump speech, and would bias the classifier. Table \ref{tab:data} reports the number of documents in each party for all three election cycles selected and Table \ref{tab:speakers} lists the candidates included in each category. Initially, words contained in the  Python \texttt{nltk} `stopwords' and `names' corpora are removed from each document. We acknowledge that there are still many names and proper nouns that are included in our resulting vocabularies, but chose not to remove them by hand --- extensive work would be needed to remove all proper nouns in an unbiased, automated fashion. Further study could be done on the effect of removing or keeping all proper nouns (e.g. one might expect ``Reagan" to be more common in Republican speeches) but it is outside the scope of this report.
 
-We lemmatize and stem using the \texttt{nltk} \texttt{WordNetLemmatizer} and \texttt{PorterStemmer} to reduce variations in words. No effort is made to correct typos. The resulting texts are converted to the bag-of-words format using three different frequency measures: \textbf{(1)} standard term frequency (\textit{tf}), \textbf{(2)} presence or absence of a word (\textit{bool}) and \textbf{(3)} a frequency measure known as term frequency-inverse document frequency (\textit{tfidf}). The \textit{tfidf} frequency is calculated as follows:
+We lemmatize and stem the words in the text using the \texttt{nltk} \texttt{WordNetLemmatizer} and \texttt{PorterStemmer} to reduce variations in words. No effort is made to correct typos. The resulting texts are converted to the bag-of-words format using three different frequency measures: \textbf{(1)} standard term frequency (\textit{tf}), \textbf{(2)} presence or absence of a word (\textit{bool}) and \textbf{(3)} a frequency measure known as term frequency-inverse document frequency (\textit{tfidf}). The \textit{tfidf} frequency is calculated as follows:
 \begin{equation}
     w = f_{t,d} \ln (1 + N/n_t),
 \end{equation}
-where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the total number of documents in the training set, and $n_t$ is the number of documents in the training set that contain the word. We have also chosen to add one to the argument of the log for smoothing. We do not restrict the size of the bag-of-words vocabulary. Further study could be done to determine whether a restricted vocabulary (e.g. the 5000 most common training words) improves or worsens classification ability.
+where $f_{t,d}$ is the frequency of the word in the current speech, $N$ is the total number of documents in the training set, and $n_t$ is the number of documents in the training set that contain the word. We have also chosen to add one to the argument of the log for smoothing. We do not restrict the size of the bag-of-words vocabulary. Further study could be done to determine whether a restricted vocabulary (e.g. the 5000 most common training words) improves or worsens classification ability. One could also develop bags of bigrams or trigrams, to incorporate ordering in the training information, as most of the classification schemes tested here treat words as independent entities.
 
 \begin{table}[h] % use table* for two-column table
-  \label{tab:data}
   \begin{ruledtabular}
   %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
   \begin{tabular}{cccc}
    & 1960 & 2008 & 2016 \\
  \hline
+ \hline
     Democrat & 598 & 362  & 76  \\
+   \hline
     Republican & 311 & 222  & 82  \\
-
  \hline
   \end{tabular}
   \end{ruledtabular}
-    \caption{The number of speeches available for each election cycle.}
+    \caption{The number of speeches available for each election cycle.} 
+    \label{tab:data}
+\end{table}
+
+\begin{table}[h] % use table* for two-column table
+  \begin{ruledtabular}
+  %  \newcommand{\twrw}[1]{\multirow{2}{*}{#1}}
+  \begin{tabular}{cLLL}
+   & 1960 & 2008 & 2016 \\
+ \hline
+  \hline
+    Democrat & Kennedy & Obama, Clinton, Edwards  & Clinton, Sanders  \\
+     \hline
+    Republican & Nixon & McCain, Romney, Huckabee  & Trump, Cruz, Kasich  \\
+ \hline
+  \end{tabular}
+  \end{ruledtabular}
+    \caption{The number of speeches available for each election cycle.} 
+    \label{tab:speakers}
 \end{table}
 
 %%% METHODS %%%
 \section{Classification Methods}
-Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM) However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events. In addition to the naive methods for classification, we implement robust methods for SVM  as described in \cite{chandra} and \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers. We also test classification methods less traditionally used for text classification: logistic regression (LR) and $k$-nearest neighbors (KNN). We begin by training an cross-validating within a single election cycle for each classification method and each word frequency measure.  Then, we train on a single election cycle and test on the remaining two election cycles. We also report, based on the NB method, the words most indicative and Democratic and Republican speech in each election cycle and across all three cycles.
+Similar studies have been done using floor speech from the Senate and House of Representatives in \cite{yu} which uses the popular text classification methods, Naive Bayes (NB) and Support Vector Machines (SVM). However, it was shown in \cite{kwon} and \cite{thomas} that these methods are sensitive to outliers. We speculate that this is why in \cite{yu} it was found that House speeches were better suited than Senate speeches for training party classifiers - the House is considered to be more partisan than the Senate, and documents from this group would presumably contain fewer outlier events (i.e. center-left and center-right politicians that occasionally cross party lines). In addition to the naive methods for classification, we implement a robust method for SVM  as described in \cite{xu} to investigate whether it is possible to design a classifier which is better suited for training on texts from more moderate speakers. We also test classification methods less traditionally used for text classification: logistic regression (LR) and $k$-nearest neighbors (KNN). We begin by training and cross-validating within a single election cycle for each classification method and each word frequency measure. Then, we train on a single election cycle and test on the remaining two election cycles. We also report, based on the NB method, the words most indicative and Democratic and Republican speech in each election cycle and across all three cycles.
+
+We will not present the NB, SVM and LR classification methods in detail because they were covered thoroughly in class. Instead, these will act as a baseline by which to measure the success of our robust SVM classifier, described below. We will also motivate the use of KNN classification for our data.
 
 \subsection{Robust SVMs}
 The classification methods described above have limited sensitivity to outliers. You could imagine that a political party ``outlier" could exist if a candidate was associated with a particular party but came into an election intending to focus on topics that have yet to gain prominence as a debate topic during campaigns. We attempt to improve upon the classification methods above by implementing a robust method of SVM like the one described in \cite{xu}. Here we will detail the minimization problem.
+
+First, a reminder that the traditional SVM problem is just minimization of the regularized hinge loss:
+\begin{equation}
+\min_\mathbf{w} \frac{\beta}{2} || \mathbf{w}||^2 + \sum_i [1-y_i\mathbf{x}_i^\top\mathbf{w}]_+,
+\end{equation}
+for a sample of training data $\{\mathbf{x}_i, y_i\}$. For a robust SVM, we want to include information about the degree to which a particular event is an outlier. One could imagine defining a variable $\eta_i$ such that $0 \leq \eta_i \leq 1$ and $\eta_i = 0$ indicates that training element $i$ is an outlier. Naively, you could define the robust problem as:
+\begin{equation}
+\min_\mathbf{w} \frac{\beta}{2} || \mathbf{w}||^2 + \sum_i \eta_i [1-y_i\mathbf{x}_i^\top\mathbf{w}]_+,
+\end{equation}
+so that outliers ($\eta_i = 0$) do not contribute to the loss function. Unfortunately, in this implementation the error $\eta_i [1-y_i\mathbf{x}_i^\top\mathbf{w}]_+$ is not an upper bound to the misclassification error. To remedy this, we add $1 - \eta_i$ to complete the robust hinge loss:
+\begin{equation}
+\eta \hbox{-} hinge(\mathbf{w}, \mathbf{x}, y) = \eta [1-y\mathbf{x}^\top\mathbf{w}]_+ + 1 - \eta.
+\end{equation}
+The new minimization problem is 
+\begin{equation}
+\min_{\substack{\mathbf{w} \\0\leq\eta_i\leq1}} \frac{\beta}{2} || \mathbf{w}||^2 + \sum_i \eta_i \hbox{-} hinge(\mathbf{w}, \mathbf{x}_i, y_i).
+\end{equation}
+The $\eta \hbox{-} hinge$ loss function further reduces to the robust loss function, described in \cite{krause, mason}:
+\begin{equation}
+robust(\mathbf{w}, \mathbf{x}, y) = min(1, hinge((\mathbf{w}, \mathbf{x}, y))).
+\end{equation}
+That is 
+\begin{multline}
+\min_{\substack{\mathbf{w} \\0\leq\eta_i\leq1}} \frac{\beta}{2} || \mathbf{w}||^2 + \sum_i \eta_i \hbox{-} hinge(\mathbf{w}, \mathbf{x}_i, y_i) \\
+ = \min_{\mathbf{w}} \frac{\beta}{2} || \mathbf{w}||^2 + \sum_i robust(\mathbf{w}, \mathbf{x}_i, y_i)
+\end{multline}
+
+We expect this robust SVM to perform better on moderate candidates that cross party lines. 
+
+\subsection{KNN for text classification}
+
+We investigate the applicability of a $k$-nearest neighbors classifier for speech recognition. While a naive Bayes classifier assumes that all words are independent features, a $k$-nearest neighbors algorithm allows us to classify speeches allowing for some degree of correlation between words in feature space. $k$-nearest neighbors algorithms have had some degree of success in the field of text classification, particularly when used to classify \textit{tfidf} data.
+
+We define feature vectors by mapping each speech onto the entire list of 16,243 tokens. If a token does not appear in a speech, then the feature vector coordinate in the corresponding dimension is zero; if a token does appear in a speech, then the feature vector coordinate in the corresponding dimension is the frequency of the token, as defined by the relevant metric. We do not normalize or otherwise process these feature vectors in any way.
+
+We train and test on values of $k$ ranging in integer steps from 1 to 25, and find that $k=1$ performs best for all trials with the exception of 2016 data, that tends to do better with higher $k$. This may be due to the fact that speeches given by the same candidate resemble each other much more than they resemble speeches given by other candidates; however, this may also be due to the lack of normalization favoring speeches of comparable length. The cross validation accuracy for each $k$ is shown in Figure \ref{fig:knn}.
+
+\begin{figure}[t]
+\includegraphics[width=.97\linewidth]{knn_tf} 
+\includegraphics[width=.97\linewidth]{knn_bool} 
+\includegraphics[width=.97\linewidth]{knn_tfidf} 
+\caption{Training accuracy for each election cycle and word frequency measure. For the 1960 and 2008 election cycles $k\sim1$ performs best. For 2016, $k\sim25$ performs best.}
+\label{fig:knn}
+\end{figure}
 
 
 %%% RESULTS %%%
@@ -67,7 +132,7 @@ We use both cross validation and traditional training/testing to gain insights i
 
 \subsection{Cross validation}
 
-Results shown in Table \ref{tab:crossval}.
+The results for cross validating our classification methods within a single election cycle are shown in Table \ref{tab:crossval}. All classification methods perform adequately. KNN tends to do worse than other methods, especially for the 2008 campaign rhetoric. The non-robust classification schemes (NB, SVM, and LR) perform best when trained and cross-validated on 1960 election data. Perhaps this is related to the fact that the 1960 election has the highest statistics, and only contains speeches from one speaker in each party (Nixon and Kennedy). That is, the classification schemes do well when they are comparing two people with different political leanings, but tend to do worse when given a selection of candidates in each party, as is the case in both 2008 and 2016.
 
 We find that the boolean word frequency measure does best in cross validation tests for NB, SVM and LR.
 
@@ -85,21 +150,21 @@ The most predictive words for each party for each election cycle (and for all th
   \begin{tabular}{ccccc}
   Method & Freq.& 1960 & 2008 & 2016 \\
     \hline
- & \textit{tf} & 92.0  & 81.1 & 91.7 \\
-NB & \textit{bool} & 92.7  & 83.0 & 92.9 \\
- & \textit{tfidf} & 91.1  & 83.9 & 93.0 \\
+ & \textit{tf} & 97.4  & 90.7 & 94.2 \\
+NB & \textit{bool} & 95.0  & 90.7 & 98.1 \\
+ & \textit{tfidf} & 97.4  & 93.3 & 92.3 \\
  \hline
- & \textit{tf} & 91.4 & 87.1 & 85.6 \\
-SVM & \textit{bool} & 93.3 & 91.2 & 91.2 \\
- & \textit{tfidf} & 91.8 & 86.0 & 90.5 \\
+ & \textit{tf} & 94.1 & 91.8 & 90.6 \\
+SVM & \textit{bool} & 96.7 & 98.0 & 94.3 \\
+ & \textit{tfidf} & 94.4 & 91.3 & 88.7 \\
  \hline
    & \textit{tf} & 89.8  & 88.2 & 85.6 \\
 LR & \textit{bool} & 93.3  & 92.9 & 91.2 \\
  & \textit{tfidf} & 90.1  & 88.3 & 89.3 \\
  \hline
-   & \textit{tf} & ZZ  & ZZ & ZZ \\
-KNN & \textit{bool} & ZZ  & ZZ & ZZ \\
- & \textit{tfidf} & ZZ  & ZZ & ZZ \\
+   & \textit{tf} & 86.5  & 78.9 & 92.3 \\
+KNN & \textit{bool} & 86.1  & 80.9 & 88.5 \\ 
+ & \textit{tfidf} & 83.8  & 73.7 & 90.4 \\
  \hline
   & \textit{tf} & ZZ  & ZZ & ZZ \\
 RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
@@ -117,21 +182,21 @@ RSVM & \textit{bool} & ZZ  & ZZ & ZZ \\
   \begin{tabular}{ccccc}
    Method & Training Year & 1960 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2008 (\textit{tf}/\textit{bool}/\textit{tfidf}) & 2016 (\textit{tf}/\textit{bool}/\textit{tfidf}) \\
     \hline
- & 1960 & ---  & \textit{41.8}/\textit{43.2}/46.2 & 46.5/53.5/48.4 \\
-NB & 2008 & \textit{43.6}/54.1/48.2  & --- & 58.6/54.8/\textbf{63.1} \\
- & 2016 & \textbf{63.4}/\textbf{64.0}/\textbf{64.1}  & \textbf{63.5}/\textbf{63.2}/\textbf{63.4} & --- \\
+ & 1960 & ---  & 45.4/\textit{39.2}/\textit{38.7} & 50.0/51.9/50.0 \\
+NB & 2008 & \textit{41.6}/\textbf{60.7}/55.4  & --- & \textbf{76.9}/53.8/57.7 \\
+ & 2016 & \textbf{65.0}/\textbf{66.0}/\textbf{65.3}  & \textbf{63.4}/\textbf{64.9}/\textbf{62.4} & --- \\
  \hline
-  & 1960 & ---  & \textit{42.8}/51.9/\textit{43.3} & 54.8/47.8/48.4 \\
-SVM & 2008 & \textit{42.2}/48.0/46.8  & --- & 58.6/54.8/48.4 \\
- & 2016 & \textit{40.4}/53.5/49.5  & \textbf{66.1}/\textbf{66.8}/\textbf{70.0} & --- \\
+  & 1960 & ---  & \textit{40.2}/\textit{44.7}/\textit{40.1} & 55.1/\textit{40.5}/52.5 \\
+SVM & 2008 & \textit{37.3}/56.9/\textit{40.7}  & --- & \textbf{70.3}/55.1/\textbf{63.9} \\
+ & 2016 & \textit{59.3}/58.4/\textbf{64.0}  & \textbf{72.4}/\textbf{66.3}/\textbf{63.5} & --- \\
  \hline
   & 1960 & ---  & 47.1/51.0/48.3 & 54.1/47.1/55.4 \\
 LR & 2008 & \textit{41.3}/47.1/\textit{44.4}  & --- & \textbf{66.2}/59.2/50.3 \\
  & 2016 & 51.8/55.9/51.5  & \textbf{67.1}/\textbf{67.8}/\textbf{71.2} & --- \\
  \hline
-  & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
-KNN & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
- & 2016 & ZZ/ZZ/ZZ  & ZZ/ZZ/ZZ & --- \\
+  & 1960 & ---  & \textit{43.8}/49.0/55.2 & \textit{28.8}/50.0/\textit{38.5} \\
+KNN & 2008 & 59.4/\textbf{62.0}/\textbf{65.0}  & --- & 53.8/50.0/\textit{44.2} \\
+ & 2016 & \textit{22.1}/\textit{28.0}/\textit{33.0}  & \textbf{68.0}/\textbf{63.9}/53.6 & --- \\
  \hline
   & 1960 & ---  & ZZ/ZZ/ZZ & ZZ/ZZ/ZZ \\
 RSVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
@@ -139,7 +204,7 @@ RSVM & 2008 & ZZ/ZZ/ZZ  & --- & ZZ/ZZ/ZZ \\
  \hline
   \end{tabular}
   \end{ruledtabular}
-    \caption{CAPTION results for training on one year and testing on another \textbf{bold} $> 60\%$, \textit{italics} $< 45\%$.}
+    \caption{The accuracies for training on one election year and testing on another election year where we have emphasized testing accuracies $\mathbf{> 60\%}$ and $\mathit{< 45\%}$. The cross-year training/testing tends to do better on years that are closer in time.}
      \label{tab:results}
 \end{table*}
 
@@ -179,12 +244,6 @@ Further study could be done to expand the dataset to examine the change of rheto
 
 Another confounding factor may be the presence or absence of an incumbent running in the election for a particular year. This candidate would have no opponent within their own party and may speak differently as a result.
 
-%\begin{figure}[h]
-%\includegraphics[width=.95\linewidth]{img/beamSchematic} 
-%\caption{CAPTION}
-%\label{fig:beam}
-%\end{figure}
-
 
 \begin{thebibliography}{7}
 
@@ -192,22 +251,28 @@ Another confounding factor may be the presence or absence of an incumbent runnin
 Chandra, B. \textit{et. al.} (2007). Robust Approach for Estimating Probabilities in Naive-Bayes Classifier. \textit{International Conference on Pattern Recognition and Machine Intelligence}, 11-16.
 
 \bibitem{kwon}
-Kwon, N. \textit{et. al.} (2006). Identifying and classifying subjective claims. \textit{Proceedings of the 8th Annual International Digital Government Research Conference}, 76â€“81.
+Kwon, N. \textit{et. al.} (2006). Identifying and classifying subjective claims. \textit{Proceedings of the 8th Annual International Digital Government Research Conference}, 76-€“81.
 
 \bibitem{mccallum}
-McCallum, A. \& Nigam, K. (1998). A comparison of event models for naive Bayes text classification. \textit{Proceedings of the 1998 Association for the Advancement of Artificial Intelligence Workshop on Learning for Text Categorization (AAAIâ€™98)}, 41â€“48.
+McCallum, A. \& Nigam, K. (1998). A comparison of event models for naive Bayes text classification. \textit{Proceedings of the 1998 Association for the Advancement of Artificial Intelligence Workshop on Learning for Text Categorization (AAAIâ€™98)}, 41â€-48.
 
 \bibitem{peters}
 Peters, G.,The American Presidency Project [online]. Santa Barbara, CA: University of California (hosted), Gerhard Peters (database). Available from World Wide Web: http://www.presidency.ucsb.edu/
 
 \bibitem{thomas}
-Thomas, M. \textit{et. al.} (2006). Get out the vote: Determining support or opposition from Congressional floor-debate transcripts. \textit{Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing (EMNLPâ€™06)}, 327â€“335.
+Thomas, M. \textit{et. al.} (2006). Get out the vote: Determining support or opposition from Congressional floor-debate transcripts. \textit{Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing (EMNLPâ€™06)}, 327-€“335.
 
 \bibitem{xu}
-Xu, L. \textit{et. Al.} (2006). Robust Support Vector Machine Training via Convex Outlier Ablation. \textit{Proceedings of the 21st national conference on Artificial intelligence}, Vol 1, 536-542.
+Xu, L. \textit{et. al.} (2006). Robust Support Vector Machine Training via Convex Outlier Ablation. \textit{Proceedings of the 21st national conference on Artificial intelligence}, Vol 1, 536-542.
 
 \bibitem{yu}
 Yu, B. \textit{et. al.} (2008). Classifying party affiliation from political speech. \textit{Journal of Information Technology \& Politics}, 5:1, 33-48, DOI: 10.1080/19331680802149608
+
+\bibitem{krause}
+Krause, N., \& Singer, Y. (2004). Leveraging the margin more carefully. \textit{Proceedings ICML}.
+
+\bibitem{mason}
+Mason, L. \textit{et. al.} (2000). Functional gradient techniques for combining hypotheses. \textit{Advances in Large Margin Classifiers}. MIT Press.
 
 \end{thebibliography}
 

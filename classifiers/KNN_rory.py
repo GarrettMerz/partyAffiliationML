@@ -16,6 +16,8 @@ for file_type in file_types:
  tokens_size = file_len('../data/processed_'+file_type+'/ALLYEARS/TOKEN_LIST')
  for train_year in train_years:
   for test_year in test_years:
+   if test_year != train_year: 
+    continue
    print('file type is ' + file_type)
    print("train year is " + train_year + "; test year is " +test_year)
    train_images = np.zeros((file_len('../data/processed_'+file_type+'/ALLYEARS/train_data'+train_year+'.dat'), tokens_size))
@@ -43,7 +45,7 @@ for file_type in file_types:
       word, freq = cell.split(':')
       test_images[i,int(word)-1] = float(freq)
 
-   klist = [1]
+   klist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
    for k in klist:
     errorcount = 0
     repguesses = 0
@@ -61,11 +63,13 @@ for file_type in file_types:
       demguesses += 1
      if int(win_label) == -1:
       repguesses += 1
-    print('for k =', end = ' ')
-    print(k, end = ' ')
-    print('the accuracy is ', end = ' ')
-    print((1-(errorcount/test_labels.size)) * 100.0)
-    print('Republican guesses is')
-    print(repguesses)
-    print('Democratic guesses is')
-    print(demguesses)
+
+    print k, (1-(float(errorcount)/test_labels.size)) * 100.0
+    # print('for k =', end = ' ')
+    # print(k, end = ' ')
+    # print('the accuracy is ', end = ' ')
+    # print((1-(errorcount/test_labels.size)) * 100.0)
+    # print('Republican guesses is')
+    # print(repguesses)
+    # print('Democratic guesses is')
+    # print(demguesses)
