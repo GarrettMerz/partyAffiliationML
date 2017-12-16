@@ -128,17 +128,19 @@ We train and test on values of $k$ ranging in integer steps from 1 to 25, and fi
 %%% RESULTS %%%
 \section{Results}
 
-We use both cross validation and traditional training/testing to gain insights into partisanship in US campaigns for the 1960, 2008 and 2016 election cycles. We use cross validation within single election cycles to optimize model parameters (e.g. $C$ in SVM or $k$ in KNN). Comparing the cross validation scores between election cycles can give some insight into degree of polarization between parties; if parties are highly polarized, cross validation scores should be greater. We then train with data from one election cycle and test on the remaining two. This can quantify the degree to which party lines shift between election cycles. The results for each set of tests are summarized below.
+We use both cross validation and traditional training/testing to gain insights into partisanship in US campaigns for the 1960, 2008 and 2016 election cycles. We use cross validation within single election cycles to optimize model parameters (e.g. $C$ in SVM or $k$ in KNN). Comparing the cross validation scores between election cycles can give some insight into degree of polarization between parties; if parties are highly polarized, cross validation scores should be greater. We then train with data from one election cycle and test on the remaining two. This can quantify the degree to which party lines shift between election cycles. The results for each set of tests are summarized below. Note that the results for LR were simply produced with the \texttt{scikit} package \texttt{linear\_model.LinearRegression} as an early sanity check to ensure that the data was processed accurately. Similar tests were run with the \texttt{scikit} packages \texttt{naive\_bayes.MultinomialBayes} and \texttt{svm.LinearSVC} but the results are not reported here because the from-scratch NB and SVM modules we wrote perform comparable to or better than the early \texttt{scikit} tests.
 
 \subsection{Cross validation}
 
-The results for cross validating our classification methods within a single election cycle are shown in Table \ref{tab:crossval}. All classification methods perform adequately. KNN tends to do worse than other methods, especially for the 2008 campaign rhetoric. The non-robust classification schemes (NB, SVM, and LR) perform best when trained and cross-validated on 1960 election data. Perhaps this is related to the fact that the 1960 election has the highest statistics, and only contains speeches from one speaker in each party (Nixon and Kennedy). That is, the classification schemes do well when they are comparing two people with different political leanings, but tend to do worse when given a selection of candidates in each party, as is the case in both 2008 and 2016.
+The results for cross validating our classification methods within a single election cycle are shown in Table \ref{tab:crossval}. All classification methods perform adequately. KNN tends to do worse than other methods, especially for the 2008 campaign rhetoric, but does when using \textit{tfidf} word frequency. We expect that if the input feature vectors (texts) had been normalized, this classification may have improved.
 
-We find that the boolean word frequency measure does best in cross validation tests for NB, SVM and LR.
+The non-robust classification schemes (NB, SVM, and LR) perform best when trained and cross-validated on 1960 election data. We expect this is related to the fact that the 1960 election has the highest statistics, and only contains speeches from one speaker in each party (Nixon and Kennedy). That is, the classification schemes do well when they are comparing two people with different political leanings, but tend to do worse when given a selection of candidates in each party, as is the case in both 2008 and 2016. In other words, 1960 does not possess candidates that are ``outliers.? We expected the classifiers to do better for election cycles that were generally considered to be more polarizing (like 2016) but the results are evidence that confounding factors (like number of speakers each in each category) prevent us from making a significant conclusion about party polarization over time. This would be an interesting area for further study and would likely require a larger sample of election years that could be split between years with a presidential incumbent or otherwise.
+
+We also find that the boolean word frequency measure does best in cross validation tests for NB, SVM and LR. This emphasizes buzzwords that could be associated with a party but not used repeatedly throughout a speech.
 
 \subsection{Predictions between years}
 
-We expect party values and talking points to evolve over time, we expect at least some predictive power when training on data from one election cycle and testing on another. Classification tends to do better when trained and tested on election cycles that are closer temporally. This is expected; the topics of interest change less between consecutive cycles than over the course of several decades. This is evident from the results in Table \ref{tab:results}. 2008 and 2016 are far better at predicting party affiliation in speeches between the two cycles than either is at predicting party affiliation in the 1960 election. In fact, when training on 1960 and testing on 2008/2016 and vice versa, we often to do worse than randomly guessing. This is reasonably consistent across classification schemes and word frequency metrics. We find that the most common misclassifications are 1960s Republicans being labeled as Democrat when trained with 2008 and 2016 data.
+While we expect party values and talking points to evolve over time, we anticipate at least some predictive power when training on data from one election cycle and testing on another. Classification tends to do better when trained and tested on election cycles that are closer temporally. This is expected; the topics of interest change less between consecutive cycles than over the course of several decades. This is evident from the results in Table \ref{tab:results}, which confirms our belief that classifier accuracy worsens as party platforms and rhetorical style change. 2008 and 2016 are far better at predicting party affiliation in speeches between the two cycles than either is at predicting party affiliation in the 1960 election (though there are exceptions). In fact, when training on 1960 and testing on 2008/2016 and vice versa, we often to do worse than randomly guessing. This is reasonably consistent across classification schemes and word frequency metrics. We find that the most common misclassifications are 1960s Republicans being labeled as Democrat when trained with 2008 and 2016 data.
 
 \subsection{Predictive words}
 
@@ -159,7 +161,7 @@ SVM & \textit{bool} & 96.7 & 98.0 & 94.3 \\
  & \textit{tfidf} & 94.4 & 91.3 & 88.7 \\
  \hline
    & \textit{tf} & 89.8  & 88.2 & 85.6 \\
-LR & \textit{bool} & 93.3  & 92.9 & 91.2 \\
+LR (\texttt{scikit}) & \textit{bool} & 93.3  & 92.9 & 91.2 \\
  & \textit{tfidf} & 90.1  & 88.3 & 89.3 \\
  \hline
    & \textit{tf} & 86.5  & 78.9 & 92.3 \\
@@ -244,6 +246,10 @@ Further study could be done to expand the dataset to examine the change of rheto
 
 Another confounding factor may be the presence or absence of an incumbent running in the election for a particular year. This candidate would have no opponent within their own party and may speak differently as a result.
 
+%%% MEMBER CONTRIBUTIONS %%%
+\section{Member contributions}
+
+Julia was responsible for implementing our SVM and robust SVM classifiers. She is responsible for the related text in this document (with additional contributions throughout the text during the editing process) and studied a great deal of possible robust implementations while working on this project before settling on the final result. Garrett produced the NB and KNN results along with the corresponding text in this paper (with additional contributions throughout the text during editing). He initially planned to implement a robust version of NB, but found that it was best suited for anomaly detection rather than the type of outlier robusticity we sought. Rory was responsible for data acquisition, processing, and initial testing with \texttt{scikit} packages to ensure the project was viable. She compiled all results in the first full draft of this report.
 
 \begin{thebibliography}{7}
 
@@ -277,3 +283,6 @@ Mason, L. \textit{et. al.} (2000). Functional gradient techniques for combining 
 \end{thebibliography}
 
 \end{document}
+
+
+
