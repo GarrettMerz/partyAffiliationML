@@ -1,0 +1,58 @@
+------------------------------------------------------------------
+SCRAPING TEXT
+
+We use data stored at http://www.presidency.ucsb.edu/index.php
+
+process_data/scrape.py will download all the filezs listed on a
+webpage with a form like:
+
+http://www.presidency.ucsb.edu/2016_election_speeches.php?candidate=70&campaign=2016CLINTON&doctype=5000
+
+the shell script process_data/runScraper.sh contains examples for
+executing the python script. 
+
+scrape.py will save one file per speech with the following path:
+
+data/rawtext/[electionyear]/[D/R]/[speakerinitial]_[filenum]
+
+a list of all the files in a particular directory is saved in files.list
+
+------------------------------------------------------------------
+PROCESSING TEXT
+
+There are a set of python files titled process_data/getVocab[FREQ]_ALL.py
+that can be used to create BoW files for each election cycle. These
+require an input file list (.list) that lists the full path of all
+input files (note: this path must include /D/ or /R/ to denote
+party affiliation).
+
+Two types of data files are produced:
+
+SPARSE.dat
+
+DENSE.X.dat, DENSE.Y.dat
+
+which match the formats we are familiar with from previous assignments.
+
+------------------------------------------------------------------
+ANALYZING TEXT
+
+The following classifiers are available:
+
+    NaiveBayes.py (G. Merz)
+
+    KNN.py (G. Merz)
+
+    SVM.m (J. Pakela)
+
+    RSVM.m (J. Pakela)
+
+    scikit_checks/basicNB.py (R. Fitzpatrick)
+
+    scikit_checks/basicSVM.py (R. Fitzpatrick)
+
+    scikit_checks/basicLR.py (R. Fitzpatrick)
+
+
+We have not included any of the datasets for the sake of space.
+Contact roryfitz@umich.edu if in need of the data.
